@@ -7,6 +7,110 @@ $signupError = isset($_SESSION['signup_error']) ? $_SESSION['signup_error'] : nu
 
 unset($_SESSION['signup_success'], $_SESSION['signup_error']);
 
+// Auto-parse Panel_26_27 secretaries from image filenames
+function parsePanel26SecretaryFilename($filename) {
+    $base = pathinfo($filename, PATHINFO_FILENAME);
+
+    // New format: Name(Department) — parentheses enclose the position
+    if (preg_match('/^(.+?)\s*\((.+)\)\s*$/', $base, $m)) {
+        $rawName = trim($m[1]);
+        $rawDept = trim($m[2]);
+
+        // Format name: split CamelCase, fix dot initials (e.g. "A.B" → "A. B")
+        $name = preg_replace('/([a-z])([A-Z])/', '$1 $2', $rawName);
+        $name = preg_replace('/\.([A-Za-z])/', '. $1', $name);
+        $name = preg_replace('/\s+/', ' ', $name);
+        $name = trim($name);
+
+        // SOP shortcuts
+        if (preg_match('/^SOP_music$/i', $rawDept)) {
+            $dept = 'Secretary of Performance (Music)';
+        } elseif (preg_match('/^SOP_dance$/i', $rawDept)) {
+            $dept = 'Secretary of Performance (Dance)';
+        } else {
+            $dept = $rawDept;
+            // Fix known typos
+            $dept = preg_replace('/^Srecretaryof/i',  'SecretaryOf', $dept);
+            $dept = str_replace('Secretay', 'Secretary', $dept);
+            // Normalize "SecretaryOf" / "Secretary Of" / "SecretaryOf " → "Secretary of "
+            $dept = preg_replace('/Secretary\s*[Oo]f\s*/i', 'Secretary of ', $dept);
+            // Expand MIAP acronym
+            $dept = str_replace('MIAP', 'Marketing, IT, Archive & Photography', $dept);
+            // Split CamelCase
+            $dept = preg_replace('/([a-z])([A-Z])/', '$1 $2', $dept);
+            // Ensure spaces around &
+            $dept = preg_replace('/([A-Za-z])\s*&\s*([A-Za-z])/', '$1 & $2', $dept);
+            // Collapse multiple spaces
+            $dept = preg_replace('/\s+/', ' ', $dept);
+            $dept = trim($dept);
+        }
+
+        return ['name' => $name, 'department' => $dept];
+    }
+
+    // Fallback: legacy underscore format (e.g. "Name_Department_Sub.jpg")
+    $deptKeywords = [
+        'Performence', 'Performance', 'Marketing', 'Creative', 'Finance',
+        'Administration', 'Administation', 'Human', 'PublicRelation',
+        'EventManagement', 'event', 'Research', 'Archive', 'IT'
+    ];
+    $parts = array_values(array_filter(array_map('trim', explode('_', $base)), fn($p) => $p !== ''));
+    $deptStart = count($parts);
+    for ($i = 1; $i < count($parts); $i++) {
+        foreach ($deptKeywords as $kw) {
+            if (stripos($parts[$i], $kw) === 0) { $deptStart = $i; break 2; }
+        }
+    }
+    $nameParts = array_slice($parts, 0, $deptStart);
+    $deptParts  = array_slice($parts, $deptStart);
+    $nameWords = [];
+    foreach ($nameParts as $p) {
+        $w = preg_replace('/([a-z])([A-Z])/', '$1 $2', $p);
+        $w = preg_replace('/\.([A-Z])/', '. $1', $w);
+        $nameWords[] = $w;
+    }
+    $name = implode(' ', $nameWords);
+    $deptResult = '';
+    foreach ($deptParts as $idx => $p) {
+        $isNewDept = false;
+        foreach ($deptKeywords as $kw) {
+            if (stripos(trim($p), $kw) === 0) { $isNewDept = true; break; }
+        }
+        $d = preg_replace('/([a-z])([A-Z])/', '$1 $2', $p);
+        $d = preg_replace('/([A-Za-z])&([A-Za-z])/', '$1 & $2', $d);
+        // Map short keywords to full department names
+        $d = preg_replace('/^event$/i', 'Event Management & Logistics', $d);
+        if ($idx === 0) {
+            $deptResult = $d;
+        } elseif ($isNewDept) {
+            $deptResult .= ', ' . $d;
+        } else {
+            $deptResult .= ' ' . $d;
+        }
+    }
+    $dept = $deptResult;
+    $dept = str_replace('Performence', 'Performance', $dept);
+    $dept = str_replace('Administation', 'Administration', $dept);
+    return ['name' => trim($name), 'department' => trim($dept)];
+}
+
+$panel26SecDir = __DIR__ . '/images/Panel_26_27/Secreteries/';
+$panel26Secretaries = [];
+if (is_dir($panel26SecDir)) {
+    $files = glob($panel26SecDir . '*.jpg');
+    sort($files);
+    foreach ($files as $file) {
+        $filename = basename($file);
+        $parsed = parsePanel26SecretaryFilename($filename);
+        $panel26Secretaries[] = [
+            'name'     => $parsed['name'],
+            'position' => $parsed['department'],
+            'image'    => 'images/Panel_26_27/Secreteries/' . rawurlencode($filename),
+            'facebook' => 'http://www.facebook.com/'
+        ];
+    }
+}
+
 // Admin login functionality
 $adminSuccess = "";
 $adminError = "";
@@ -2244,6 +2348,7 @@ https://templatemo.com/tm-583-festava-live
                                 Year</label>
                             <select id="panelYearSelect" class="form-select panel-year-dropdown">
                                 <option value="current">Current Panel (2025-2026)</option>
+                                <option value="panel_26_27">2026–2027 (Panel 26–27)</option>
                                 <option value="panel_23_24">2023–2025</option>
                                 <option value="panel_22_23">2022–2023</option>
                                 <option value="panel_21_22">2021–2022</option>
@@ -4554,6 +4659,7 @@ ${message}
             // Map dropdown values to panel data keys
             const panelDataKeys = {
                 'current': '2024',
+                'panel_26_27': '2026',
                 'panel_23_24': '2023',
                 'panel_22_23': '2022',
                 'panel_21_22': '2021',
@@ -5159,6 +5265,35 @@ ${message}
                         image: 'images/Panel_19_20/Secretaries/rd/Anika_Anjum_Sadia.jpg'
                     }
                     ]
+                },
+                '2026': {
+                    panelMembers: [
+                        {
+                            name: 'Avibadhan Das',
+                            image: 'images/Panel_26_27/Panel/Avibadhan_Das.jpg',
+                            panel: 'Panel Member',
+                            facebook: 'http://www.facebook.com/'
+                        },
+                        {
+                            name: 'Khaled Bin Taher',
+                            image: 'images/Panel_26_27/Panel/Khaled_Bin_Taher.jpg',
+                            panel: 'Panel Member',
+                            facebook: 'http://www.facebook.com/'
+                        },
+                        {
+                            name: 'Rubu',
+                            image: 'images/Panel_26_27/Panel/Rubu.jpg',
+                            panel: 'Panel Member',
+                            facebook: 'http://www.facebook.com/'
+                        },
+                        {
+                            name: 'Rudian',
+                            image: 'images/Panel_26_27/Panel/rudian.jpg',
+                            panel: 'Panel Member',
+                            facebook: 'http://www.facebook.com/'
+                        }
+                    ],
+                    sbMembers: <?php echo json_encode($panel26Secretaries, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES); ?>
                 }
             };
 
@@ -5371,6 +5506,7 @@ ${message}
                     // Map yearKey to actual year number
                     const yearMapping = {
                         '2024': 2025, // Current year data
+                        '2026': 2027,
                         '2023': 2024,
                         '2022': 2023,
                         '2021': 2022,
