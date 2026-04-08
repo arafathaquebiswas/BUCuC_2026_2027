@@ -5422,13 +5422,13 @@ ${message}
                     panelMembers: [
                         {
                             name: 'Avibadhan Das',
-                            image: 'images/Panel_26_27/Panel/Avibadhan_Das.jpg',
+                            image: 'images/Panel_26_27/Panel/Avibadhan_Das1.jpg',
                             panel: 'President',
                             facebook: 'http://www.facebook.com/'
                         },
                         {
                             name: 'Rudian Ahmed',
-                            image: 'images/Panel_26_27/Panel/rudian.jpg',
+                            image: 'images/Panel_26_27/Panel/rudian1.jpg',
                             panel: 'Vice President',
                             facebook: 'http://www.facebook.com/'
                         },
@@ -5440,7 +5440,7 @@ ${message}
                         },
                         {
                             name: 'Khaled Bin Taher',
-                            image: 'images/Panel_26_27/Panel/Khaled_Bin_Taher.jpg',
+                            image: 'images/Panel_26_27/Panel/Khaled_Bin_Taher1.jpg',
                             panel: 'Treasurer',
                             facebook: 'http://www.facebook.com/'
                         },
