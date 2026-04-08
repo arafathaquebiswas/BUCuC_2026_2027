@@ -7,6 +7,32 @@ $signupError = isset($_SESSION['signup_error']) ? $_SESSION['signup_error'] : nu
 
 unset($_SESSION['signup_success'], $_SESSION['signup_error']);
 
+// ── Cache-busting ──────────────────────────────────────────────────────────
+// Version = last-modified time of this file.
+// Save (touch) index.php after uploading new images to force a new version.
+define('IMG_V', filemtime(__FILE__));
+
+// Output-buffer callback: appends ?v=IMG_V to every local <img src="images/…">
+// and CSS url('images/…') in the rendered HTML, so browsers never serve stale images.
+function _imgCacheBust(string $html): string {
+    $v = IMG_V;
+    // src="images/..." and src='images/...'
+    $html = preg_replace(
+        '/\b(src=["\'])(images\/[^"\'?#\s]+)(["\'])/',
+        '$1$2?v=' . $v . '$3',
+        $html
+    );
+    // url('images/...'), url("images/..."), url(images/...)
+    $html = preg_replace(
+        '/\burl\((["\']?)(images\/[^"\'?#\s)]+)\1\)/',
+        'url($1$2?v=' . $v . '$1)',
+        $html
+    );
+    return $html;
+}
+ob_start('_imgCacheBust');
+// ──────────────────────────────────────────────────────────────────────────
+
 // Auto-parse Panel_26_27 secretaries from image filenames
 function parsePanel26SecretaryFilename($filename) {
     $base = pathinfo($filename, PATHINFO_FILENAME);
@@ -97,7 +123,10 @@ function parsePanel26SecretaryFilename($filename) {
 $panel26SecDir = __DIR__ . '/images/Panel_26_27/Secreteries/';
 $panel26Secretaries = [];
 if (is_dir($panel26SecDir)) {
-    $files = glob($panel26SecDir . '*.jpg');
+    $files = array_merge(
+        glob($panel26SecDir . '*.jpg')  ?: [],
+        glob($panel26SecDir . '*.jpeg') ?: []
+    );
     sort($files);
     foreach ($files as $file) {
         $filename = basename($file);
@@ -105,11 +134,50 @@ if (is_dir($panel26SecDir)) {
         $panel26Secretaries[] = [
             'name'     => $parsed['name'],
             'position' => $parsed['department'],
-            'image'    => 'images/Panel_26_27/Secreteries/' . rawurlencode($filename),
+            'image'    => 'images/Panel_26_27/Secreteries/' . rawurlencode($filename) . '?v=' . filemtime($file),
             'facebook' => 'http://www.facebook.com/'
         ];
     }
 }
+
+// Pin Arafat first, Zakaria second; sort the rest by department order
+$_pinned = [];
+$_rest   = [];
+foreach ($panel26Secretaries as $_member) {
+    if (!isset($_pinned[0]) && stripos($_member['name'], 'Arafat') !== false) {
+        $_pinned[0] = $_member;
+    } elseif (!isset($_pinned[1]) && stripos($_member['name'], 'Zakaria') !== false) {
+        $_pinned[1] = $_member;
+    } else {
+        $_rest[] = $_member;
+    }
+}
+// Department display order (keyword matched against the parsed position string)
+$_deptRank = [
+    'Marketing'      => 0,
+    'Human'          => 1,
+    'Event'          => 2,
+    'Finance'        => 3,
+    'Administration' => 4,
+    'Creative'       => 5,
+    'Public'         => 6,
+    'Performance'    => 7,
+    'Research'       => 8,
+];
+usort($_rest, function ($a, $b) use ($_deptRank) {
+    $rankA = 99;
+    $rankB = 99;
+    foreach ($_deptRank as $kw => $rank) {
+        if (stripos($a['position'], $kw) !== false) { $rankA = $rank; break; }
+    }
+    foreach ($_deptRank as $kw => $rank) {
+        if (stripos($b['position'], $kw) !== false) { $rankB = $rank; break; }
+    }
+    return $rankA <=> $rankB;
+});
+ksort($_pinned);
+$panel26Secretaries = array_merge(array_values($_pinned), $_rest);
+unset($_pinned, $_rest, $_member, $_deptRank);
 
 // Admin login functionality
 $adminSuccess = "";
@@ -2097,9 +2165,16 @@ https://templatemo.com/tm-583-festava-live
                 </div>
             </div>
 
-            <div class="video-wrap">
-                <img src="images/slide1.jpg" class="custom-video" alt="BUCuC Banner"
-                    style="width: 100%; height: 100%; object-fit: cover;">
+            <div class="video-wrap"
+                 style="position:absolute;top:0;left:0;width:100%;height:100%;z-index:0;overflow:hidden;">
+                <video id="heroBannerVideo"
+                       playsinline
+                       poster="images/slide1.jpg"
+                       style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;">
+                    <source src="video/bucuc1.webm" type="video/webm">
+                    <img src="images/slide1.jpg" alt="BUCuC Banner"
+                         style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;">
+                </video>
             </div>
 
         </section>
@@ -2347,8 +2422,8 @@ https://templatemo.com/tm-583-festava-live
                             <label for="panelYearSelect" class="form-label text-black fw-bold mb-2">View Panel by
                                 Year</label>
                             <select id="panelYearSelect" class="form-select panel-year-dropdown">
-                                <option value="current">Current Panel (2025-2026)</option>
-                                <option value="panel_26_27">2026–2027 (Panel 26–27)</option>
+                                <option value="panel_26_27">Current Panel (2026–2027)</option>
+                                <option value="current">2025–2026</option>
                                 <option value="panel_23_24">2023–2025</option>
                                 <option value="panel_22_23">2022–2023</option>
                                 <option value="panel_21_22">2021–2022</option>
@@ -3182,6 +3257,10 @@ https://templatemo.com/tm-583-festava-live
 
                     <!-- Panel Content Area -->
                     <div class="panel-content-area col-12">
+                        <!-- Dynamic subtitle showing the currently selected panel year -->
+                        <div class="text-center mb-3">
+                            <h5 id="panelYearTitle" class="fw-bold" style="color: #f3d35c;">Current Panel (2026–2027)</h5>
+                        </div>
                         <!-- Loading Spinner -->
                         <div class="panel-loading" id="panelLoading" style="display: none;">
                             <div class="spinner"></div>
@@ -4667,6 +4746,10 @@ ${message}
                 'panel_19_20': '2019'
             };
 
+            // Cache-busting: mirrors PHP IMG_V; appends ?v= to any local image URL
+            const IMG_V = '<?= IMG_V ?>';
+            const imgUrl = url => url + (url.includes('?') ? '&' : '?') + 'v=' + IMG_V;
+
             // Panel data mapping
             const panelData = {
                 '2024': {
@@ -5271,30 +5354,41 @@ ${message}
                         {
                             name: 'Avibadhan Das',
                             image: 'images/Panel_26_27/Panel/Avibadhan_Das.jpg',
-                            panel: 'Panel Member',
+                            panel: 'President',
+                            facebook: 'http://www.facebook.com/'
+                        },
+                        {
+                            name: 'Rudian Ahmed',
+                            image: 'images/Panel_26_27/Panel/rudian.jpg',
+                            panel: 'Vice President',
+                            facebook: 'http://www.facebook.com/'
+                        },
+                        {
+                            name: 'Rubaba Nusheen',
+                            image: 'images/Panel_26_27/Panel/Rubu.jpg',
+                            panel: 'General Secretary',
                             facebook: 'http://www.facebook.com/'
                         },
                         {
                             name: 'Khaled Bin Taher',
                             image: 'images/Panel_26_27/Panel/Khaled_Bin_Taher.jpg',
-                            panel: 'Panel Member',
-                            facebook: 'http://www.facebook.com/'
-                        },
-                        {
-                            name: 'Rubu',
-                            image: 'images/Panel_26_27/Panel/Rubu.jpg',
-                            panel: 'Panel Member',
-                            facebook: 'http://www.facebook.com/'
-                        },
-                        {
-                            name: 'Rudian',
-                            image: 'images/Panel_26_27/Panel/rudian.jpg',
-                            panel: 'Panel Member',
+                            panel: 'Joint Secretary',
                             facebook: 'http://www.facebook.com/'
                         }
                     ],
                     sbMembers: <?php echo json_encode($panel26Secretaries, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES); ?>
                 }
+            };
+
+            // Display labels for each dropdown option (used to update panelYearTitle)
+            const panelTitleLabels = {
+                'panel_26_27': 'Current Panel (2026–2027)',
+                'current':     '2025–2026',
+                'panel_23_24': '2023–2025',
+                'panel_22_23': '2022–2023',
+                'panel_21_22': '2021–2022',
+                'panel_20_21': '2020–2021',
+                'panel_19_20': '2019–2020',
             };
 
             // Handle dropdown change event
@@ -5304,6 +5398,12 @@ ${message}
                 if (!selectedYearKey) {
                     console.error('No data found for year:', this.value);
                     return;
+                }
+
+                // Update the panel year subtitle heading
+                const panelYearTitle = document.getElementById('panelYearTitle');
+                if (panelYearTitle) {
+                    panelYearTitle.textContent = panelTitleLabels[this.value] || this.options[this.selectedIndex].text;
                 }
 
                 const data = panelData[selectedYearKey];
@@ -5359,7 +5459,7 @@ ${message}
                     memberDiv.innerHTML = `
 <div class="artists-thumb">
 <div class="artists-image-wrap">
-    <img src="${encodeURI(member.image)}" class="artists-image img-fluid" alt="${member.name}" 
+    <img src="${encodeURI(imgUrl(member.image))}" class="artists-image img-fluid" alt="${member.name}"
             onerror="this.src='images/placeholder.svg'; console.error('Failed to load image:', '${member.image}');" />
 </div>
 <div class="artists-hover">
@@ -5418,7 +5518,7 @@ ${message}
                         const memberPosition = member.position || 'Secretary';
 
                         slide.innerHTML = `
-<img src="${member.image}" alt="${memberName}" onerror="this.src='images/placeholder.png'; console.error('Failed to load SB image:', '${member.image}');" />
+<img src="${imgUrl(member.image)}" alt="${memberName}" onerror="this.src='images/placeholder.png'; console.error('Failed to load SB image:', '${member.image}');" />
 <div class="overlay">
     <a href="${facebookLink}" target="_blank">
         <ion-icon name="logo-facebook" style="color: #1877f2"></ion-icon>
@@ -5537,9 +5637,9 @@ ${message}
 
             // Initialize with current panel data (2024-2025)
             const initializeSBMembers = async () => {
-                const currentData = panelData['2024'];
+                const currentData = panelData['2026'];
                 if (currentData) {
-                    await updateMembers(currentData, '2024');
+                    await updateMembers(currentData, '2026');
                 }
             };
 
@@ -5578,29 +5678,31 @@ ${message}
             }
         });
 
-        // Audio Toggle Functionality
-        document.addEventListener('DOMContentLoaded', function () {
-            const audioToggle = document.getElementById('audioToggle');
-            const heroVideo = document.getElementById('heroVideo');
+        // Hero banner video
+        (function () {
+            const video    = document.getElementById('heroBannerVideo');
+            const bgAudios = document.querySelectorAll('audio');
+            if (!video) return;
 
-            if (audioToggle && heroVideo) {
-                audioToggle.addEventListener('click', function () {
-                    const icon = this.querySelector('i');
+            // Try to play with sound. If the browser blocks sound, fall back to muted autoplay.
+            video.muted  = false;
+            video.volume = 1;
 
-                    if (heroVideo.muted) {
-                        heroVideo.muted = false;
-                        icon.className = 'fas fa-volume-up';
-                        this.innerHTML = '<i class="fas fa-volume-up"></i>';
-                        this.style.background = 'rgba(0, 0, 0, 0.9)'; // Green when unmuted
-                    } else {
-                        heroVideo.muted = true;
-                        icon.className = 'fas fa-volume-mute';
-                        this.innerHTML = '<i class="fas fa-volume-mute"></i>';
-                        this.style.background = 'rgba(0, 0, 0, 0.9)'; // Orange when muted
-                    }
-                });
-            }
-        });
+            video.play().catch(function () {
+                // Sound was blocked — retry silently muted
+                video.muted = true;
+                video.play().catch(function () { /* autoplay fully blocked */ });
+            });
+
+            // Mute background audio while video is playing
+            video.addEventListener('play',  function () {
+                bgAudios.forEach(function (a) { a.muted = true; });
+            });
+            // Restore background audio when video ends
+            video.addEventListener('ended', function () {
+                bgAudios.forEach(function (a) { a.muted = false; });
+            });
+        })();
 
         // QR Code Hash Navigation Handler
         // This ensures that when someone scans a QR code with a hash (#section_5),
