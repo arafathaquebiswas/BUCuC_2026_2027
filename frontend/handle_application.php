@@ -131,91 +131,83 @@ try {
             exit();
         }
 
-        // FIRST: Try to send congratulations email
-        $emailResult = ['success' => false, 'error' => 'Email function not called'];
-        try {
-            $emailResult = sendCongratulationsEmail($member);
-            error_log("Email result: " . json_encode($emailResult));
-        } catch (Exception $e) {
-            $emailResult = ['success' => false, 'error' => 'Email error: ' . $e->getMessage()];
-            error_log("Email exception: " . $e->getMessage());
+        // Step 1: Save member to DB first — acceptance must never depend on email
+        $checkStmt = $pdo->prepare("SELECT id FROM members WHERE university_id = ? OR email = ? OR gsuite_email = ?");
+        $checkStmt->execute([$member['university_id'], $member['email'], $member['gsuite_email']]);
+        if ($checkStmt->fetch()) {
+            header("Location: " . $redirect_to . "?error=" . urlencode('Member already exists in the approved list.'));
+            exit();
         }
 
-        // ONLY update database status if email was sent successfully
-        if ($emailResult['success']) {
-            // Check if member already exists in members table
-            $checkStmt = $pdo->prepare("SELECT id FROM members WHERE university_id = ? OR email = ? OR gsuite_email = ?");
-            $checkStmt->execute([$member['university_id'], $member['email'], $member['gsuite_email']]);
-            if ($checkStmt->fetch()) {
-                header("Location: " . $redirect_to . "?error=" . urlencode('Member already exists in the approved list.'));
-                exit();
+        $insertStmt = $pdo->prepare("
+            INSERT INTO members
+            (full_name, university_id, email, gsuite_email, department, phone, semester, gender, date_of_birth, facebook_url, firstPriority, secondPriority, created_at, updated_at)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)
+        ");
+
+        $insertResult = $insertStmt->execute([
+            $member['full_name'],
+            $member['university_id'],
+            $member['email'],
+            $member['gsuite_email'],
+            $member['department'],
+            $member['phone'],
+            $member['semester'],
+            $member['gender'],
+            $member['date_of_birth'],
+            $member['facebook_url'],
+            $member['firstPriority'],
+            $member['secondPriority'],
+            $member['created_at']
+        ]);
+
+        if (!$insertResult) {
+            header("Location: " . $redirect_to . "?error=" . urlencode('Failed to save member to database'));
+            exit();
+        }
+
+        // Step 2: Remove from shortlisted_members
+        $deleteStmt = $pdo->prepare("DELETE FROM shortlisted_members WHERE id = ?");
+        $deleteStmt->execute([$memberId]);
+
+        // Step 3: Send congratulations email (non-blocking — failure only produces a warning)
+        $emailResult = ['success' => false, 'error' => 'Not attempted'];
+        try {
+            $emailResult = sendCongratulationsEmail($member);
+        } catch (Exception $e) {
+            $emailResult = ['success' => false, 'error' => $e->getMessage()];
+        }
+        logEmailResult($member['full_name'], $emailResult);
+
+        // Step 4: Google Sheets sync (optional)
+        $sheetsResult = ['success' => false, 'message' => 'Not attempted'];
+        try {
+            if (function_exists('sendToGoogleSheets')) {
+                $sheetsResult = sendToGoogleSheets($member);
             }
+        } catch (Exception $e) {
+            $sheetsResult = ['success' => false, 'message' => $e->getMessage()];
+        }
+        if (function_exists('logGoogleSheetsOperation')) {
+            try { logGoogleSheetsOperation('accept_member', $member, $sheetsResult); } catch (Exception $e) {}
+        }
 
-            // Insert member into members table (final approved members)
-            $insertStmt = $pdo->prepare("
-                INSERT INTO members 
-                (full_name, university_id, email, gsuite_email, department, phone, semester, gender, date_of_birth, facebook_url, firstPriority, secondPriority, created_at, updated_at)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)
-            ");
+        // Step 5: Build redirect message — acceptance already done; email/sheets are informational
+        $warnings = [];
+        if (!$emailResult['success']) {
+            $warnings[] = 'email failed (' . ($emailResult['error'] ?? 'unknown') . ') — check SMTP App Password';
+        }
+        if (!$sheetsResult['success']) {
+            $warnings[] = 'Google Sheets: ' . ($sheetsResult['message'] ?? 'not available');
+        }
 
-            $insertResult = $insertStmt->execute([
-                $member['full_name'],
-                $member['university_id'],
-                $member['email'],
-                $member['gsuite_email'],
-                $member['department'],
-                $member['phone'],
-                $member['semester'],
-                $member['gender'],
-                $member['date_of_birth'],
-                $member['facebook_url'],
-                $member['firstPriority'],
-                $member['secondPriority'],
-                $member['created_at']
-            ]);
-
-            if ($insertResult) {
-                // Delete from shortlisted_members
-                $deleteStmt = $pdo->prepare("DELETE FROM shortlisted_members WHERE id = ?");
-                $deleteStmt->execute([$memberId]);
-                // Send data to Google Sheets (optional)
-                $sheetsResult = ['success' => false, 'message' => 'Google Sheets not attempted'];
-                try {
-                    if (function_exists('sendToGoogleSheets')) {
-                        $sheetsResult = sendToGoogleSheets($member);
-                    }
-                } catch (Exception $e) {
-                    $sheetsResult = ['success' => false, 'message' => 'Google Sheets error: ' . $e->getMessage()];
-                }
-
-                // Log the Google Sheets operation for debugging (if function exists)
-                if (function_exists('logGoogleSheetsOperation')) {
-                    try {
-                        logGoogleSheetsOperation('accept_member', $member, $sheetsResult);
-                    } catch (Exception $e) {
-                        // Ignore logging errors
-                    }
-                }
-
-                // Success response
-                $messages = ['congratulations email sent'];
-                if ($sheetsResult['success']) {
-                    $messages[] = 'data added to Google Sheets';
-                } else {
-                    $messages[] = 'Google Sheets: ' . ($sheetsResult['message'] ?? 'not available');
-                }
-
-                $finalMessage = 'Member accepted successfully (' . implode(', ', $messages) . ')';
-
-                error_log("Sending response: " . $finalMessage);
-                header("Location: " . $redirect_to . "?success=" . urlencode($finalMessage));
-            } else {
-                header("Location: " . $redirect_to . "?error=" . urlencode('Failed to update member status in database'));
-            }
+        if (empty($warnings)) {
+            $sentTo = implode(', ', $emailResult['recipients'] ?? []);
+            $finalMessage = 'Member accepted successfully. Email sent to: ' . $sentTo;
+            header("Location: " . $redirect_to . "?success=" . urlencode($finalMessage));
         } else {
-            // Email failed - do NOT accept the member
-            $errorMessage = 'Failed to send email to ' . $member['full_name'] . '. Application not accepted. Error: ' . ($emailResult['error'] ?? 'unknown error');
-            header("Location: " . $redirect_to . "?error=" . urlencode($errorMessage));
+            $finalMessage = 'Member accepted and saved to database. Warnings: ' . implode('; ', $warnings);
+            header("Location: " . $redirect_to . "?warning=" . urlencode($finalMessage));
         }
     } elseif ($action === 'delete_approved') {
         // Check permissions
@@ -241,35 +233,112 @@ try {
     header("Location: " . $redirect_to . "?error=" . urlencode('Server error: ' . $e->getMessage()));
 }
 
-function sendCongratulationsEmail($member)
+/**
+ * Build the deduplicated, validated list of recipient addresses for a member.
+ * Returns an array of ['address' => string, 'label' => string] entries.
+ *
+ * Priority:  gsuite_email (university) is always primary when valid.
+ * Logic:
+ *   - Both valid & different  → send to both
+ *   - Both valid & identical  → send once (no duplicate)
+ *   - Only one valid          → send to whichever is present
+ *   - Neither valid           → empty array (caller must handle)
+ */
+function resolveRecipients(array $member): array
 {
+    $gsuite   = trim($member['gsuite_email'] ?? '');
+    $personal = trim($member['email']        ?? '');
+    $name     = $member['full_name'];
+
+    $validGsuite   = filter_var($gsuite,   FILTER_VALIDATE_EMAIL) !== false;
+    $validPersonal = filter_var($personal, FILTER_VALIDATE_EMAIL) !== false;
+
+    $recipients = [];
+
+    if ($validGsuite) {
+        $recipients[] = ['address' => $gsuite,   'label' => 'university (G-Suite)'];
+    }
+
+    // Add personal email only if it is valid AND different from gsuite
+    if ($validPersonal && strtolower($personal) !== strtolower($gsuite)) {
+        $recipients[] = ['address' => $personal, 'label' => 'personal'];
+    }
+
+    return $recipients;
+}
+
+/**
+ * Log email send attempts to the dedicated email log file.
+ * $result must contain 'recipients' (array), 'success' (bool), and optionally 'error'.
+ */
+function logEmailResult(string $name, array $result): void
+{
+    $logPath = defined('EMAIL_LOG_PATH')
+        ? EMAIL_LOG_PATH
+        : __DIR__ . '/../backend/logs/email.log';
+
+    $entry = json_encode([
+        'timestamp'  => date('Y-m-d H:i:s'),
+        'name'       => $name,
+        'recipients' => $result['recipients'] ?? [],
+        'success'    => $result['success'],
+        'detail'     => $result['error'] ?? 'sent',
+    ]) . PHP_EOL;
+
+    file_put_contents($logPath, $entry, FILE_APPEND | LOCK_EX);
+}
+
+function sendCongratulationsEmail(array $member): array
+{
+    $recipients = resolveRecipients($member);
+
+    if (empty($recipients)) {
+        return [
+            'success'    => false,
+            'error'      => 'No valid email address found for ' . $member['full_name'],
+            'recipients' => [],
+        ];
+    }
+
     try {
         $mail = new PHPMailer(true);
 
-        // Server settings
+        // Server settings — sourced from backend/config/email_config.php
         $mail->isSMTP();
-        $mail->Host = SMTP_HOST;
-        $mail->SMTPAuth = true;
-        $mail->Username = SMTP_USERNAME;
-        $mail->Password = SMTP_PASSWORD;
-        $mail->SMTPSecure = SMTP_SECURITY === 'tls' ? PHPMailer::ENCRYPTION_STARTTLS : PHPMailer::ENCRYPTION_SMTPS;
-        $mail->Port = SMTP_PORT;
+        $mail->Host       = SMTP_HOST;
+        $mail->SMTPAuth   = true;
+        $mail->Username   = SMTP_USERNAME;
+        $mail->Password   = SMTP_PASSWORD;
+        $mail->SMTPSecure = (SMTP_SECURITY === 'tls')
+            ? PHPMailer::ENCRYPTION_STARTTLS
+            : PHPMailer::ENCRYPTION_SMTPS;
+        $mail->Port       = SMTP_PORT;
+        $mail->Timeout    = 15;
 
-        // Recipients
         $mail->setFrom(FROM_EMAIL, FROM_NAME);
-        $mail->addAddress($member['gsuite_email'], $member['full_name']);
 
-        // Content
+        // Add every validated, deduplicated recipient
+        foreach ($recipients as $r) {
+            $mail->addAddress($r['address'], $member['full_name']);
+        }
+
         $mail->isHTML(true);
         $mail->Subject = 'Congratulations! Welcome to BRAC University Cultural Club';
-
-        $mail->Body = generateEmailTemplate($member);
+        $mail->Body    = generateEmailTemplate($member);
         $mail->AltBody = generatePlainTextEmail($member);
 
         $mail->send();
-        return ['success' => true];
+
+        return [
+            'success'    => true,
+            'recipients' => array_column($recipients, 'address'),
+        ];
     } catch (Exception $e) {
-        return ['success' => false, 'error' => $e->getMessage()];
+        return [
+            'success'    => false,
+            'error'      => $e->getMessage(),
+            'recipients' => array_column($recipients, 'address'),
+        ];
     }
 }
 

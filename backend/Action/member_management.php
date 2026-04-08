@@ -1,6 +1,7 @@
 <?php
 session_start();
 require_once '../Database/db.php';
+require_once '../config/email_config.php';
 
 // Check if user is admin
 if (!isset($_SESSION["admin"])) {
@@ -210,17 +211,17 @@ function sendAcceptanceEmail($to_email, $full_name, $event_category = 'General')
     $mail = new PHPMailer(true);
     
     try {
-        // Server settings
+        // Server settings — use shared email_config.php constants
         $mail->isSMTP();
-        $mail->Host       = 'smtp.gmail.com';
+        $mail->Host       = SMTP_HOST;
         $mail->SMTPAuth   = true;
-        $mail->Username   = 'arafat.haque.biswas@g.bracu.ac.bd';
-        $mail->Password   = 'your_app_password'; // Use app password for Gmail
+        $mail->Username   = SMTP_USERNAME;
+        $mail->Password   = SMTP_PASSWORD;
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-        $mail->Port       = 587;
-        
+        $mail->Port       = SMTP_PORT;
+
         // Recipients
-        $mail->setFrom('arafat.haque.biswas@g.bracu.ac.bd', 'BRAC University Cultural Club');
+        $mail->setFrom(FROM_EMAIL, FROM_NAME);
         $mail->addAddress($to_email, $full_name);
         
         // Content

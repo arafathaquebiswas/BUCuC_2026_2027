@@ -1,40 +1,23 @@
 <?php
 
-// Gmail SMTP Configuration for Hostinger Hosting
-// Using your personal Gmail account to send emails from your BUCuC website
+// ─────────────────────────────────────────────────────────────────────────────
+// Gmail SMTP Configuration
+//
+// IMPORTANT: Gmail requires a 16-character App Password (not your normal login).
+// To regenerate:
+//   1. Go to https://myaccount.google.com/security
+//   2. Enable 2-Step Verification (must be ON)
+//   3. Search "App passwords" → create one for "Mail"
+//   4. Paste the 16-char code below (no spaces)
+// ─────────────────────────────────────────────────────────────────────────────
 
-define('SMTP_HOST', 'smtp.gmail.com');
-define('SMTP_PORT', 587);
+define('SMTP_HOST',     'smtp.gmail.com');
+define('SMTP_PORT',     587);
 define('SMTP_SECURITY', 'tls');
-define('SMTP_USERNAME', 'hr.bucuc@gmail.com'); // Your existing Gmail address
-define('SMTP_PASSWORD', 'kvwghrfavcxaflbs'); // Your new Gmail App Password
-define('FROM_EMAIL', 'hr.bucuc@gmail.com'); // Your existing Gmail address
-define('FROM_NAME', 'BRAC University Cultural Club');
+define('SMTP_USERNAME', 'hr.bucuc@gmail.com');
+define('SMTP_PASSWORD', 'acfg asud cszi vpdp'); // <-- Replace with fresh App Password if auth fails
+define('FROM_EMAIL',    'hr.bucuc@gmail.com');
+define('FROM_NAME',     'BRAC University Cultural Club');
 
-// Alternative configurations (commented out)
-// ===== OUTLOOK/HOTMAIL CONFIGURATION =====
-// define('SMTP_HOST', 'smtp-mail.outlook.com');
-// define('SMTP_PORT', 587);
-// define('SMTP_SECURITY', 'tls');
-// define('SMTP_USERNAME', 'your.email@outlook.com');
-// define('SMTP_PASSWORD', 'your_password');
-// define('FROM_EMAIL', 'your.email@outlook.com');
-// define('FROM_NAME', 'BRAC University Cultural Club');
-
-// ===== YAHOO CONFIGURATION =====
-// define('SMTP_HOST', 'smtp.mail.yahoo.com');
-// define('SMTP_PORT', 587);
-// define('SMTP_SECURITY', 'tls');
-// define('SMTP_USERNAME', 'your.email@yahoo.com');
-// define('SMTP_PASSWORD', 'your_app_password');
-// define('FROM_EMAIL', 'your.email@yahoo.com');
-// define('FROM_NAME', 'BRAC University Cultural Club';
-
-// ===== HOSTINGER EMAIL CONFIGURATION =====
-// define('SMTP_HOST', 'smtp.hostinger.com');
-// define('SMTP_PORT', 587);
-// define('SMTP_SECURITY', 'tls');
-// define('SMTP_USERNAME', 'hr@yourdomain.com');
-// define('SMTP_PASSWORD', 'your_hostinger_email_password');
-// define('FROM_EMAIL', 'hr@yourdomain.com');
-// define('FROM_NAME', 'BRAC University Cultural Club';
+// Path to the dedicated email error log (relative to this file)
+define('EMAIL_LOG_PATH', __DIR__ . '/../logs/email.log');

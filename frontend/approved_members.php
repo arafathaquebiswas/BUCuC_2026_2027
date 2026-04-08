@@ -11,12 +11,15 @@ require_once '../backend/Database/db.php';
 
 // Handle success and error messages from URL parameters
 $success_message = '';
-$error_message = '';
+$warning_message = '';
+$error_message   = '';
 
 if (isset($_GET['success'])) {
     $success_message = urldecode($_GET['success']);
 }
-
+if (isset($_GET['warning'])) {
+    $warning_message = urldecode($_GET['warning']);
+}
 if (isset($_GET['error'])) {
     $error_message = urldecode($_GET['error']);
 }
@@ -230,11 +233,20 @@ function getInitials($name)
                 Finally selected and registered members of BUCuC
             </p>
 
-            <!-- Success/Error Messages -->
+            <!-- Success/Warning/Error Messages -->
             <?php if (!empty($success_message)): ?>
                 <div class="alert alert-success alert-dismissible fade show" role="alert"
                     style="background: rgba(40, 167, 69, 0.2); border: 1px solid rgba(40, 167, 69, 0.3); color: #51cf66;">
                     <i class="fas fa-check-circle me-2"></i><?php echo htmlspecialchars($success_message); ?>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"
+                        style="filter: brightness(0) invert(1);"></button>
+                </div>
+            <?php endif; ?>
+
+            <?php if (!empty($warning_message)): ?>
+                <div class="alert alert-warning alert-dismissible fade show" role="alert"
+                    style="background: rgba(255, 193, 7, 0.15); border: 1px solid rgba(255, 193, 7, 0.4); color: #ffc107;">
+                    <i class="fas fa-exclamation-triangle me-2"></i><?php echo htmlspecialchars($warning_message); ?>
                     <button type="button" class="btn-close" data-bs-dismiss="alert"
                         style="filter: brightness(0) invert(1);"></button>
                 </div>

@@ -25,6 +25,7 @@ class ComposerStaticInit256dd244a53c40a8b7a783a823c34aa6
         ),
         'M' =>
         array (
+            'MyCLabs\\Enum\\' => 13,
             'Matrix\\' => 7,
         ),
         'C' =>
@@ -60,6 +61,10 @@ class ComposerStaticInit256dd244a53c40a8b7a783a823c34aa6
         array (
             0 => __DIR__ . '/..' . '/phpmailer/phpmailer/src',
         ),
+        'MyCLabs\\Enum\\' =>
+        array (
+            0 => __DIR__ . '/..' . '/myclabs/php-enum/src',
+        ),
         'Matrix\\' =>
         array (
             0 => __DIR__ . '/..' . '/markbaker/matrix/classes/src',
@@ -86,6 +91,7 @@ class ComposerStaticInit256dd244a53c40a8b7a783a823c34aa6
 
     public static $classMap = array (
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
+        'Stringable' => __DIR__ . '/..' . '/myclabs/php-enum/stubs/Stringable.php',
     );
 
     public static function getInitializer(ClassLoader $loader)

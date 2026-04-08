@@ -657,6 +657,119 @@ $signupEnabled = getSignupStatus();
             max-width: 300px;
         }
 
+        /* ── Panel Member Card ──────────────────────────────────────────────
+           Self-contained component used for every panel member card.
+           Does NOT touch .artists-thumb (used by the Advisors section).
+        ─────────────────────────────────────────────────────────────────── */
+        .panel-member-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 16px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
+        }
+
+        .panel-member-card:hover {
+            transform: translateY(-7px);
+            box-shadow: 0 16px 48px rgba(243, 211, 92, 0.22),
+                        0 6px 20px rgba(0, 0, 0, 0.45);
+        }
+
+        /* Image area — fixed 4:5 portrait aspect ratio */
+        .panel-member-card .pmc-image-wrap {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 4 / 5;
+            overflow: hidden;
+            background: rgba(255, 255, 255, 0.04);
+            flex-shrink: 0;
+        }
+
+        .panel-member-card .pmc-image-wrap img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: top center;
+            display: block;
+            transition: transform 0.45s ease;
+        }
+
+        .panel-member-card:hover .pmc-image-wrap img {
+            transform: scale(1.06);
+        }
+
+        /* Facebook overlay — appears on hover */
+        .panel-member-card .pmc-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(231, 111, 44, 0.50);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            backdrop-filter: blur(3px);
+            -webkit-backdrop-filter: blur(3px);
+        }
+
+        .panel-member-card:hover .pmc-overlay {
+            opacity: 1;
+        }
+
+        .panel-member-card .pmc-overlay a {
+            color: #ffffff;
+            font-size: 2.4rem;
+            line-height: 1;
+            text-decoration: none;
+            transition: transform 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .panel-member-card .pmc-overlay a:hover {
+            transform: scale(1.2);
+        }
+
+        /* Text body — always visible below the image */
+        .panel-member-card .pmc-body {
+            padding: 14px 16px 18px;
+            text-align: center;
+            flex-shrink: 0;
+            background: rgba(0, 0, 0, 0.40);
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .panel-member-card .pmc-name {
+            font-size: 1rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin: 0;
+            line-height: 1.3;
+            word-break: break-word;
+        }
+
+        .panel-member-card .pmc-role {
+            font-size: 0.78rem;
+            font-weight: 600;
+            color: #f3d35c;
+            text-transform: uppercase;
+            letter-spacing: 0.07em;
+            margin: 0;
+            display: block;
+        }
+
+        /* Column wrapper — makes all cards in a row stretch to equal height */
+        .panel-members-grid .pmc-col {
+            display: flex;
+        }
+
         /* Loading spinner */
         .panel-loading {
             position: absolute;
@@ -3268,120 +3381,76 @@ https://templatemo.com/tm-583-festava-live
 
                         <!-- Panel Members Container -->
                         <div class="panel-members-container" id="panelMembersContainer">
-                            <div class="row justify-content-center panel-members-grid">
-                                <!-- Current Panel Members (2024-2025) -->
-                                <div class="col-lg-5 col-12 mb-4">
-                                    <div class="artists-thumb">
-                                        <div class="artists-image-wrap">
-                                            <img src="images/Panel_24_25/Panel/aparup.jpg"
-                                                class="artists-image img-fluid">
+                            <div class="row g-4 justify-content-center panel-members-grid">
+                                <!-- Default view: Panel_24_25 (4 members → col-lg-6 each) -->
+
+                                <div class="col-lg-6 col-12 pmc-col">
+                                    <div class="panel-member-card">
+                                        <div class="pmc-image-wrap">
+                                            <img src="images/Panel_24_25/Panel/aparup.jpg" alt="Aparup Chowdhury">
+                                            <div class="pmc-overlay">
+                                                <a href="https://www.facebook.com/aparup.chy.77" target="_blank" aria-label="Facebook">
+                                                    <ion-icon name="logo-facebook"></ion-icon>
+                                                </a>
+                                            </div>
                                         </div>
-
-                                        <div class="artists-hover">
-                                            <p>
-                                                <strong>Name:</strong>
-                                                Aparup Chowdhury 12
-                                            </p>
-
-                                            <p>
-                                                <strong>Position:</strong>
-                                                President
-                                            </p>
-
-                                            <hr>
-
-                                            <p class="mb-0">
-                                                <strong>Facebook:</strong>
-                                                <a href="https://www.facebook.com/aparup.chy.77">Aparup
-                                                    Chowdhury</a>
-                                            </p>
+                                        <div class="pmc-body">
+                                            <p class="pmc-name">Aparup Chowdhury</p>
+                                            <span class="pmc-role">President</span>
                                         </div>
                                     </div>
                                 </div>
 
-                                <div class="col-lg-5 col-12 mb-4">
-                                    <div class="artists-thumb">
-                                        <div class="artists-image-wrap">
-                                            <img src="images/Panel_24_25/Panel/nafisa.jpg"
-                                                class="artists-image img-fluid">
+                                <div class="col-lg-6 col-12 pmc-col">
+                                    <div class="panel-member-card">
+                                        <div class="pmc-image-wrap">
+                                            <img src="images/Panel_24_25/Panel/nafisa.jpg" alt="Nafisa Noor">
+                                            <div class="pmc-overlay">
+                                                <a href="https://www.facebook.com/nafisa.noor.57685" target="_blank" aria-label="Facebook">
+                                                    <ion-icon name="logo-facebook"></ion-icon>
+                                                </a>
+                                            </div>
                                         </div>
-
-                                        <div class="artists-hover">
-                                            <p>
-                                                <strong>Name:</strong>
-                                                Nafisa Noor
-                                            </p>
-
-                                            <p>
-                                                <strong>Position:</strong>
-                                                General Secretary
-                                            </p>
-
-                                            <hr>
-
-                                            <p class="mb-0">
-                                                <strong>Facebook:</strong>
-                                                <a href="https://www.facebook.com/nafisa.noor.57685">Nafisa
-                                                    Noor</a>
-                                            </p>
+                                        <div class="pmc-body">
+                                            <p class="pmc-name">Nafisa Noor</p>
+                                            <span class="pmc-role">General Secretary</span>
                                         </div>
                                     </div>
                                 </div>
 
-                                <div class="col-lg-5 col-12 mb-4">
-                                    <div class="artists-thumb">
-                                        <div class="artists-image-wrap">
-                                            <img src="images/Panel_24_25/Panel/zia.jpg" class="artists-image img-fluid">
+                                <div class="col-lg-6 col-12 pmc-col">
+                                    <div class="panel-member-card">
+                                        <div class="pmc-image-wrap">
+                                            <img src="images/Panel_24_25/Panel/zia.jpg" alt="Towkeer Mohammad Zia">
+                                            <div class="pmc-overlay">
+                                                <a href="https://www.facebook.com/towkeer.mohammad.zia.2024" target="_blank" aria-label="Facebook">
+                                                    <ion-icon name="logo-facebook"></ion-icon>
+                                                </a>
+                                            </div>
                                         </div>
-
-                                        <div class="artists-hover">
-                                            <p>
-                                                <strong>Name:</strong>
-                                                Towkeer Mohammad Zia
-                                            </p>
-
-                                            <p>
-                                                <strong>Position:</strong>
-                                                Joint Secretary
-                                            </p>
-
-                                            <hr>
-
-                                            <p class="mb-0">
-                                                <strong>Facebook:</strong>
-                                                <a href="https://www.facebook.com/towkeer.mohammad.zia.2024">Towkeer
-                                                    Mohammad Zia</a>
-                                            </p>
+                                        <div class="pmc-body">
+                                            <p class="pmc-name">Towkeer Mohammad Zia</p>
+                                            <span class="pmc-role">Joint Secretary</span>
                                         </div>
                                     </div>
                                 </div>
 
-                                <div class="col-lg-5 col-12 mb-4">
-                                    <div class="artists-thumb">
-                                        <div class="artists-image-wrap">
-                                            <img src="images/Panel_24_25/Panel/mamun.jpg"
-                                                class="artists-image img-fluid">
+                                <div class="col-lg-6 col-12 pmc-col">
+                                    <div class="panel-member-card">
+                                        <div class="pmc-image-wrap">
+                                            <img src="images/Panel_24_25/Panel/mamun.jpg" alt="Mamun Abdullah">
+                                            <div class="pmc-overlay">
+                                                <a href="https://www.facebook.com/aam099" target="_blank" aria-label="Facebook">
+                                                    <ion-icon name="logo-facebook"></ion-icon>
+                                                </a>
+                                            </div>
                                         </div>
-
-                                        <div class="artists-hover">
-                                            <p>
-                                                <strong>Name:</strong>
-                                                Mamun Abdullah
-                                            </p>
-
-                                            <p>
-                                                <strong>Position:</strong>
-                                                Vice President
-                                            </p>
-
-                                            <hr>
-
-                                            <p class="mb-0">
-                                                <strong>Facebook:</strong>
-                                                <a href="https://www.facebook.com/aam099">Mamun
-                                                    Abdullah</a>
-                                            </p>
+                                        <div class="pmc-body">
+                                            <p class="pmc-name">Mamun Abdullah</p>
+                                            <span class="pmc-role">Vice President</span>
                                         </div>
+                                    </div>
+                                </div>
                                     </div>
                                 </div>
                             </div>
@@ -5372,6 +5441,12 @@ ${message}
                         {
                             name: 'Khaled Bin Taher',
                             image: 'images/Panel_26_27/Panel/Khaled_Bin_Taher.jpg',
+                            panel: 'Treasurer',
+                            facebook: 'http://www.facebook.com/'
+                        },
+                        {
+                            name: 'Sadman Safin Oasif',
+                            image: 'images/Panel_26_27/Panel/SadmanSafinOasif.jpg',
                             panel: 'Joint Secretary',
                             facebook: 'http://www.facebook.com/'
                         }
@@ -5439,35 +5514,41 @@ ${message}
                     console.log(member, "Panel Members JSON")
                     const memberDiv = document.createElement('div');
 
-                    // Adjust grid layout based on number of members
+                    // Column classes — row has justify-content-center so
+                    // any partial last row is automatically centred.
                     const memberCount = data.panelMembers.length;
-                    if (memberCount === 4) {
-                        // For 4 members: 2 on top, 2 on bottom
-                        memberDiv.className = 'col-lg-6 col-12 mb-4';
+                    if (memberCount === 5) {
+                        // Desktop  (≥992 px): 3 + 2 centred
+                        // Tablet   (768–991): 2 + 2 + 1 centred
+                        // Mobile   (<768 px): 1 per row
+                        memberDiv.className = 'col-lg-4 col-md-6 col-12 pmc-col';
+                    } else if (memberCount === 4) {
+                        // 2 + 2
+                        memberDiv.className = 'col-lg-6 col-12 pmc-col';
                     } else if (memberCount === 3) {
-                        // For 3 members: 2 on top, 1 centered below
-                        if (index < 2) {
-                            memberDiv.className = 'col-lg-6 col-12 mb-4';
-                        } else {
-                            memberDiv.className = 'col-lg-6 col-12 mb-4 mx-auto';
-                        }
+                        // 2 on top, 1 centred below (mx-auto centres the lone last item)
+                        memberDiv.className = index < 2
+                            ? 'col-lg-6 col-12 pmc-col'
+                            : 'col-lg-6 col-12 pmc-col mx-auto';
                     } else {
-                        // For other numbers: use original sizing
-                        memberDiv.className = 'col-lg-5 col-12 mb-4';
+                        memberDiv.className = 'col-lg-5 col-12 pmc-col';
                     }
 
                     memberDiv.innerHTML = `
-<div class="artists-thumb">
-<div class="artists-image-wrap">
-    <img src="${encodeURI(imgUrl(member.image))}" class="artists-image img-fluid" alt="${member.name}"
-            onerror="this.src='images/placeholder.svg'; console.error('Failed to load image:', '${member.image}');" />
-</div>
-<div class="artists-hover">
-    <p style="color:white"><strong>Name:</strong> ${member.name}</p>
-    <p style="color:white"><strong>Position:</strong> ${member.panel}</p>
-    <hr>
-    <p class="mb-0"><strong>Facebook:</strong> <a href="${member.facebook}" target="_blank">${member.name}</a></p>
-</div>
+<div class="panel-member-card">
+  <div class="pmc-image-wrap">
+    <img src="${encodeURI(imgUrl(member.image))}" alt="${member.name}"
+         onerror="this.src='images/placeholder.svg';" />
+    <div class="pmc-overlay">
+      <a href="${member.facebook}" target="_blank" aria-label="Facebook – ${member.name}">
+        <ion-icon name="logo-facebook"></ion-icon>
+      </a>
+    </div>
+  </div>
+  <div class="pmc-body">
+    <p class="pmc-name">${member.name}</p>
+    <span class="pmc-role">${member.panel}</span>
+  </div>
 </div>
 `;
 
