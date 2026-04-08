@@ -1,0 +1,167 @@
+/* Enhanced Active Navbar Styles */
+
+/* Main Navbar Active States */
+#mainNavbar .navbar-nav .nav-link {
+    position: relative;
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+#mainNavbar .navbar-nav .nav-link.inactive {
+    opacity: 0.7;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+#mainNavbar .navbar-nav .nav-link.active {
+    color: #f3d35c !important;
+    font-weight: 600;
+    opacity: 1;
+    text-shadow: 0 0 8px rgba(243, 211, 92, 0.3);
+}
+
+/* Animated underline for active links */
+#mainNavbar .navbar-nav .nav-link.active::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    height: 2px;
+    background: linear-gradient(90deg, #f3d35c, #e76f2c);
+    border-radius: 1px;
+    animation: slideIn 0.4s ease;
+}
+
+@keyframes slideIn {
+    from {
+        width: 0%;
+        opacity: 0;
+    }
+    to {
+        width: 80%;
+        opacity: 1;
+    }
+}
+
+/* Hover effects */
+#mainNavbar .navbar-nav .nav-link:not(.active):hover {
+    color: #f3d35c;
+    transform: translateY(-1px);
+    text-shadow: 0 2px 4px rgba(243, 211, 92, 0.2);
+}
+
+/* Site Header Navbar Active States */
+.site-header .navbar-nav .nav-link {
+    position: relative;
+    transition: all 0.3s ease;
+    font-weight: bold;
+}
+
+.site-header .navbar-nav .nav-link.inactive {
+    opacity: 0.7;
+    color: rgba(34, 34, 34, 0.7);
+}
+
+.site-header .navbar-nav .nav-link.active {
+    color: #e76f2c !important;
+    font-weight: 700;
+    opacity: 1;
+}
+
+.site-header .navbar-nav .nav-link.active::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    height: 2px;
+    background: linear-gradient(90deg, #e76f2c, #f3d35c);
+    border-radius: 1px;
+    animation: slideIn 0.4s ease;
+}
+
+.site-header .navbar-nav .nav-link:not(.active):hover {
+    color: #e76f2c;
+    transform: translateY(-1px);
+}
+
+/* Sidebar Active States */
+.sidebar-nav a {
+    position: relative;
+    transition: all 0.3s ease;
+    color: #fff;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    padding: 12px 20px;
+    border-radius: 6px;
+    margin: 2px 0;
+}
+
+.sidebar-nav a:hover {
+    background: rgba(243, 211, 92, 0.1);
+    color: #f3d35c;
+    transform: translateX(5px);
+}
+
+.sidebar-nav a.active {
+    background: linear-gradient(90deg, rgba(243, 211, 92, 0.2), rgba(231, 111, 44, 0.1));
+    color: #f3d35c;
+    font-weight: 600;
+    border-left: 3px solid #f3d35c;
+    padding-left: 17px;
+}
+
+.sidebar-nav a.active i {
+    color: #f3d35c;
+}
+
+/* Active state glow effect */
+.sidebar-nav a.active {
+    box-shadow: 0 2px 8px rgba(243, 211, 92, 0.15);
+}
+
+/* Footer Links Active States */
+.site-footer-links .site-footer-link {
+    transition: all 0.3s ease;
+}
+
+.site-footer-links .site-footer-link:hover {
+    color: #f3d35c;
+    transform: translateX(3px);
+}
+
+/* Responsive adjustments */
+@media (max-width: 991.98px) {
+    #mainNavbar .navbar-nav .nav-link.active::after,
+    .site-header .navbar-nav .nav-link.active::after {
+        bottom: 0px;
+        height: 1px;
+    }
+}
+
+/* Enhanced visual feedback for mobile */
+@media (max-width: 767.98px) {
+    .sidebar-nav a {
+        padding: 15px 20px;
+        font-size: 1.1rem;
+    }
+    
+    .sidebar-nav a.active {
+        background: rgba(243, 211, 92, 0.15);
+        border-left: 4px solid #f3d35c;
+    }
+}
+
+/* Smooth transitions for all navbar elements */
+.navbar-nav, .sidebar-nav, .site-footer-links {
+    transition: all 0.3s ease;
+}
+
+/* Custom button hover enhancement */
+.custom-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(231, 111, 44, 0.3);
+}

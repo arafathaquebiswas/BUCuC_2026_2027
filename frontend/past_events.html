@@ -1,0 +1,1378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Past Events - BRAC University Cultural Club</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/bootstrap-icons.css" rel="stylesheet">
+    <link href="css/templatemo-festava-live.css" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="icon" href="images/logopng.png" type="image/png">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100;200;300;400;500;600;700;800;900&display=swap');
+        
+        :root {
+            --primary-orange: #e76f2c;
+            --primary-yellow: #f3d35c;
+            --dark-blue: #0a1931;
+            --medium-blue: #1a2639;
+            --light-blue: #2d3748;
+            --text-white: #ffffff;
+            --text-light: #e0e0e0;
+            --text-muted: #cccccc;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: linear-gradient(135deg, var(--dark-blue) 0%, var(--medium-blue) 50%, var(--light-blue) 100%);
+            min-height: 100vh;
+            color: var(--text-white);
+            font-family: 'Outfit', sans-serif;
+            overflow-x: hidden;
+        }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, var(--primary-orange), var(--primary-yellow));
+            border-radius: 5px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(135deg, var(--primary-yellow), var(--primary-orange));
+        }
+        
+        /* Floating Particles Background */
+        .particles-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+        
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: var(--primary-yellow);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+            opacity: 0.3;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 0.3; }
+            50% { transform: translateY(-20px) rotate(180deg); opacity: 0.8; }
+        }
+        
+        /* Enhanced Back Button */
+        .back-btn {
+            position: fixed;
+            top: 30px;
+            left: 30px;
+            z-index: 1000;
+            background: linear-gradient(135deg, var(--primary-orange), var(--primary-yellow));
+            border: none;
+            color: var(--text-white);
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            box-shadow: 0 8px 25px rgba(231, 111, 44, 0.4);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .back-btn:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 15px 35px rgba(231, 111, 44, 0.6);
+            color: var(--text-white);
+        }
+        
+        .back-btn i {
+            margin-right: 8px;
+            transition: transform 0.3s ease;
+        }
+        
+        .back-btn:hover i {
+            transform: translateX(-3px);
+        }
+        
+        /* Premium Page Header */
+        .page-header {
+            text-align: center;
+            padding: 120px 20px 80px;
+            background: linear-gradient(135deg, rgba(231, 111, 44, 0.15), rgba(243, 211, 92, 0.15));
+            margin-bottom: 60px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .page-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="%23ffffff" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+            opacity: 0.3;
+        }
+        
+        .page-title {
+            font-size: 4rem;
+            font-weight: 800;
+            background: linear-gradient(90deg, var(--primary-orange), var(--primary-yellow), var(--primary-orange));
+            background-size: 200% 100%;
+            animation: headerGradient 4s linear infinite;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 20px;
+            text-shadow: 0 0 30px rgba(231, 111, 44, 0.5);
+            position: relative;
+            z-index: 2;
+        }
+        
+        @keyframes headerGradient {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 100% 50%; }
+        }
+        
+        .page-subtitle {
+            font-size: 1.4rem;
+            color: var(--text-light);
+            margin-bottom: 0;
+            font-weight: 300;
+            position: relative;
+            z-index: 2;
+        }
+        
+        /* Enhanced Event Cards */
+        .event-detail-card {
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 25px;
+            padding: 40px;
+            margin-bottom: 60px;
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.3);
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .event-detail-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: left 0.8s ease;
+        }
+        
+        .event-detail-card:hover::before {
+            left: 100%;
+        }
+        
+        .event-detail-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 25px 80px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(243, 211, 92, 0.2);
+        }
+        
+        .event-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 35px;
+            gap: 25px;
+        }
+        
+        .event-icon-large {
+            font-size: 3.5rem;
+            color: var(--primary-yellow);
+            background: linear-gradient(135deg, rgba(243, 211, 92, 0.2), rgba(231, 111, 44, 0.2));
+            padding: 25px;
+            border-radius: 20px;
+            min-width: 100px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(243, 211, 92, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .event-detail-card:hover .event-icon-large {
+            transform: scale(1.1) rotate(5deg);
+            box-shadow: 0 15px 40px rgba(243, 211, 92, 0.4);
+        }
+        .event-icon-large img {
+            width: 60px;
+            height: 60px;
+            object-fit: contain;
+            display: block;
+            margin: 0 auto;
+        }
+        .event-icon-large .logo-mask-yellow {
+            width: 60px;
+            height: 60px;
+            background-color: var(--primary-yellow);
+            -webkit-mask: url('images/logo.png') center/contain no-repeat;
+            mask: url('images/logo.png') center/contain no-repeat;
+            display: block;
+            margin: 0 auto;
+        }
+        
+        .event-title-large {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--text-white);
+            margin-bottom: 15px;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+        
+        .event-meta {
+            color: var(--text-light);
+            font-size: 1.2rem;
+            line-height: 1.8;
+        }
+        
+        .event-meta i {
+            color: var(--primary-yellow);
+            margin-right: 8px;
+        }
+        
+        .event-image {
+            width: 100%;
+            height: 350px;
+            object-fit: cover;
+            border-radius: 20px;
+            margin: 30px 0;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+            transition: all 0.4s ease;
+        }
+        
+        .event-detail-card:hover .event-image {
+            transform: scale(1.05);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+        }
+        
+        .event-image-contain {
+            object-fit: contain;
+            height: 450px;
+            background: rgba(0, 0, 0, 0.2);
+        }
+        
+        .event-image-panel-handover {
+            object-position: center 15%;
+            height: 400px;
+        }
+        
+        .event-image-bootcamp {
+            object-position: center 38%;
+            height: 400px;
+        }
+        
+        .event-image-qwe {
+            height: 700px; /* Significantly higher than default 350px */
+        }
+        
+        .event-description {
+            font-size: 1.2rem;
+            line-height: 1.9;
+            color: var(--text-white);
+            margin-bottom: 30px;
+            text-align: justify;
+        }
+        .event-description p {
+            color: #ffffff;
+        }
+        
+        .event-highlights {
+            background: linear-gradient(135deg, rgba(243, 211, 92, 0.15), rgba(231, 111, 44, 0.15));
+            border-radius: 20px;
+            padding: 30px;
+            margin: 30px 0;
+            border-left: 5px solid var(--primary-yellow);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(243, 211, 92, 0.2);
+        }
+        
+        .highlights-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-yellow);
+            margin-bottom: 20px;
+            text-shadow: 0 2px 10px rgba(243, 211, 92, 0.3);
+        }
+        
+        .highlights-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .highlights-list li {
+            padding: 12px 0;
+            color: var(--text-white);
+            position: relative;
+            padding-left: 35px;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .highlights-list li:hover {
+            color: var(--text-white);
+            transform: translateX(5px);
+        }
+        
+        .highlights-list li:before {
+            content: "★";
+            color: var(--primary-yellow);
+            position: absolute;
+            left: 0;
+            font-size: 1.3rem;
+            animation: starTwinkle 2s ease-in-out infinite;
+        }
+        
+        @keyframes starTwinkle {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.7; transform: scale(1.2); }
+        }
+        
+        .event-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 25px;
+            margin-top: 35px;
+        }
+        
+        .stat-card {
+            background: linear-gradient(135deg, rgba(231, 111, 44, 0.15), rgba(243, 211, 92, 0.15));
+            border-radius: 18px;
+            padding: 25px;
+            text-align: center;
+            border: 1px solid rgba(231, 111, 44, 0.3);
+            backdrop-filter: blur(10px);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: left 0.6s ease;
+        }
+        
+        .stat-card:hover::before {
+            left: 100%;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-8px) scale(1.05);
+            box-shadow: 0 20px 50px rgba(231, 111, 44, 0.3);
+            border-color: var(--primary-orange);
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--primary-orange);
+            display: block;
+            text-shadow: 0 2px 10px rgba(231, 111, 44, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .stat-card:hover .stat-number {
+            color: var(--primary-yellow);
+            transform: scale(1.1);
+        }
+        
+        .stat-label {
+            color: var(--text-light);
+            font-size: 1rem;
+            margin-top: 8px;
+            font-weight: 500;
+        }
+        
+        /* Loading Animation */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--dark-blue);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease;
+        }
+        
+        .loading-spinner {
+            width: 60px;
+            height: 60px;
+            border: 4px solid rgba(243, 211, 92, 0.3);
+            border-top: 4px solid var(--primary-yellow);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .page-title {
+                font-size: 2.5rem;
+            }
+            
+            .event-title-large {
+                font-size: 2rem;
+            }
+            
+            .event-header {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .event-icon-large {
+                font-size: 3rem;
+                padding: 20px;
+            }
+            
+            .event-detail-card {
+                padding: 25px;
+                margin-bottom: 40px;
+            }
+            
+            .back-btn {
+                top: 20px;
+                left: 20px;
+                padding: 12px 24px;
+                font-size: 0.9rem;
+            }
+            
+            .event-stats {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .page-title {
+                font-size: 2rem;
+            }
+            
+            .event-title-large {
+                font-size: 1.8rem;
+            }
+            
+            .event-description {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner"></div>
+    </div>
+    
+    <!-- Floating Particles Background -->
+    <div class="particles-bg" id="particlesBg"></div>
+    
+    <a href="index.php" class="back-btn">
+        <i class="fas fa-arrow-left"></i>Back to Home
+    </a>
+    
+    <div class="page-header" data-aos="fade-down" data-aos-duration="1000">
+        <h1 class="page-title">Past Events</h1>
+        <p class="page-subtitle">Relive the amazing moments from our cultural events</p>
+    </div>
+    
+    <div class="container">
+        
+        <!-- Club Leadership Bootcamp 2025 -->
+        <div id="event-6" class="event-detail-card" data-aos="fade-up" data-aos-duration="1200" data-aos-delay="100">
+            <div class="event-header">
+                <div class="event-icon-large">
+                    <span class="logo-mask-yellow" role="img" aria-label="BUCuC Logo"></span>
+                </div>
+                <div>
+                    <h2 class="event-title-large">Club Leadership Bootcamp 2025</h2>
+                    <div class="event-meta">
+                        <i class="fas fa-calendar"></i>10 October, 2025, Friday<br>
+                        <i class="fas fa-user"></i>By BUCuC<br>
+                        <i class="fas fa-map-marker-alt"></i>BRAC CDM, Savar
+                    </div>
+                </div>
+            </div>
+            
+            <img src="images/pls.jpg" alt="Panel Handover Event" class="event-image event-image-bootcamp" data-aos="zoom-in" data-aos-duration="800" data-aos-delay="500">
+            
+            <div class="event-description" data-aos="fade-up" data-aos-duration="800" data-aos-delay="500">
+                <p>"Leadership is unlocking people's potential to become better." – Bill Bradley</p>
+                <p>On October 10, 2024, during the Club Leadership Bootcamp 2025, the environment was filled with inspiration and purpose. Our panel members from BRAC University Cultural Club (BUCuC) attended an empowering session titled <strong>"Unlocking Opportunities."</strong></p>
+                <p>The session became even more impactful with the honorable presence of Vice Chancellor <strong>Professor Syed Ferhat Anwar, PhD</strong>, Registrar <strong>Dr. David Dowland</strong>, Joint Director of Student Life <strong>Ms. Tahsina Rahman</strong>, and officials from Student Life. Their words of encouragement motivated our members to develop as future leaders.</p>
+                <p>The session highlighted how leadership grows through recognizing possibilities, embracing challenges, and inspiring collective growth. It was a reminder that true leadership begins with unlocking the potential within ourselves and others.</p>
+                <p>Heartfelt thanks to the Office of Co-curricular Activities (OCA) and Student Life for organizing such a transformative and empowering experience. Work. Bond. Glow. ✨</p>
+            </div>
+            
+            <div class="event-highlights" data-aos="fade-up" data-aos-duration="800" data-aos-delay="700">
+                <h3 class="highlights-title">Event Highlights</h3>
+                <ul class="highlights-list">
+                    <li>BUCuC panel members attended the Club Leadership Bootcamp 2025.</li>
+                    <li>Insightful session on <strong>"Unlocking Opportunities"</strong> focused on leadership and personal development.</li>
+                    <li>Honorable Vice Chancellor, Registrar, and Student Life officials graced the session.</li>
+                    <li>Key ideas included recognizing potential, embracing challenges, and inspiring growth.</li>
+                    <li>Organized by the Office of Co-curricular Activities (OCA) and Student Life.</li>
+                    <li>A meaningful step forward in shaping BUCuC's future leaders.</li>
+                </ul>
+            </div>
+            
+            <div class="event-stats" data-aos="fade-up" data-aos-duration="800" data-aos-delay="900">
+                <div class="stat-card">
+                    <span class="stat-number">160+</span>
+                    <div class="stat-label">Attendees</div>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">4</span>
+                    <div class="stat-label">Activity</div>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">7</span>
+                    <div class="stat-label">Hours</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Rhythm Revive 25.1 -->
+        <div id="event-7" class="event-detail-card" data-aos="fade-up" data-aos-duration="1200" data-aos-delay="150">
+            <div class="event-header">
+                <div class="event-icon-large">
+                    <span class="logo-mask-yellow" role="img" aria-label="BUCuC Logo"></span>
+                </div>
+                <div>
+                    <h2 class="event-title-large">Rhythm Revive 25.1</h2>
+                    <div class="event-meta">
+                        <i class="fas fa-calendar"></i>7 September, 2025 Sunday<br>
+                        <i class="fas fa-user"></i>By BUCuC<br>
+                        <i class="fas fa-map-marker-alt"></i>BRACU Auditorium
+                    </div>
+                </div>
+            </div>
+            
+            <img src="images/slide8.jpg" alt="Event 7" class="event-image" data-aos="zoom-in" data-aos-duration="800" data-aos-delay="350">
+            
+            <div class="event-description" data-aos="fade-up" data-aos-duration="800" data-aos-delay="550">
+                <p>Rhythm Revive 25.1 was nothing short of magical. From the very first beat, the stage came alive with soulful music and graceful dance, as performers showcased their talent, passion, and boundless energy.</p> <p>Adding an extra spark to the evening, our President and Vice President delivered outstanding performances that elevated the show even further.</p> <p>The BUCuC family illuminated the Brac University Auditorium with creativity, unity, and love. Each moment reflected the dedication and spirit that define who we are.</p> <p>Our heartfelt gratitude goes out to every performer, anchor, volunteer, photographer, the supportive audience, and everyone who played a part in making Rhythm Revive 25.1 a memorable success.</p> <p>Work. Bond. Glow. ✨</p>
+            </div>
+            
+            <div class="event-highlights" data-aos="fade-up" data-aos-duration="800" data-aos-delay="750">
+                <h3 class="highlights-title">Event Highlights</h3>
+                <ul class="highlights-list">
+                    <li>Rhythm Revive 25.1 lit up the Brac University Auditorium with music, dance, and creativity.</li>
+                    <li>Powerful musical performances and graceful dance acts showcased BUCuC's incredible talent.</li>
+                    <li>Outstanding performances by the President and Vice President added an extra spark to the event.</li>
+                    <li>The BUCuC family came together with passion, unity, and love throughout the show.</li>
+                    <li>Anchors, volunteers, photographers, and performers worked tirelessly to make the event successful.</li>
+                    <li>A memorable and vibrant celebration of artistry, teamwork, and BUCuC spirit.</li>
+                </ul>
+            </div>
+            
+            <div class="event-stats" data-aos="fade-up" data-aos-duration="800" data-aos-delay="950">
+                <div class="stat-card">
+                    <span class="stat-number">400+</span>
+                    <div class="stat-label">Attendees</div>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">17</span>
+                    <div class="stat-label">Performances</div>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">3</span>
+                    <div class="stat-label">Band Performance</div>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">4</span>
+                    <div class="stat-label">Hours</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Participation at 16th Convocation Volunteers Appreciation Ceremony -->
+        <div id="event-8" class="event-detail-card" data-aos="fade-up" data-aos-duration="1200" data-aos-delay="200">
+            <div class="event-header">
+                <div class="event-icon-large">
+                    <span class="logo-mask-yellow" role="img" aria-label="BUCuC Logo"></span>
+                </div>
+                <div>
+                    <h2 class="event-title-large">Participation at 16th Convocation Volunteers Appreciation Ceremony</h2>
+                    <div class="event-meta">
+                        <i class="fas fa-calendar"></i>22 August, 2025, Friday<br>
+                        <i class="fas fa-user"></i>By BUCuC<br>
+                        <i class="fas fa-map-marker-alt"></i>BRAC University Residential Campus, Savar
+                    </div>
+                </div>
+            </div>
+            
+            <img src="images/slide9.jpg" alt="Event 8" class="event-image" data-aos="zoom-in" data-aos-duration="800" data-aos-delay="400">
+            
+            <div class="event-description" data-aos="fade-up" data-aos-duration="800" data-aos-delay="600">
+                <p>"Volunteers are the gentle light that makes every celebration shine brighter." On 8th August, at the peaceful BRAC University Residential Campus in Savar, we came together to honor the incredible volunteers who devoted their time and energy to making the 16th Convocation a success. Their tireless efforts stood at the heart of the celebration. The event grew even more meaningful with the presence of our Honorable Vice-Chancellor, Registrar, and Co-Chairman, who expressed their gratitude and personally handed each volunteer a certificate of appreciation. BUCuC felt truly privileged to perform on this special occasion—pouring our respect into soulful music, expressive dance, and heartfelt qawwali. To all the volunteers who brought warmth, dedication, and love to one of the most important days of the year: thank you for making it unforgettable. Work. Bond. Glow. ✨</p>
+            </div>
+            
+            <div class="event-highlights" data-aos="fade-up" data-aos-duration="800" data-aos-delay="800">
+                <h3 class="highlights-title">Event Highlights</h3>
+                <ul class="highlights-list">
+                    <li>Celebration of the dedicated volunteers of BRAC University's 16th Convocation.</li>
+                    <li>Held on 8th August, 2025, Sunday at the Residential Campus, Savar.</li>
+                    <li>Honorable Vice-Chancellor, Registrar, and Co-Chairman recognized volunteers with certificates of gratitude.</li>
+                    <li>BUCuC performed soulful music, dance, and qawwali to honor the volunteers.</li>
+                    <li>A heartfelt acknowledgement of the hard work and commitment of all volunteers.</li>
+                    <li>A memorable event filled with appreciation, unity, and celebration.</li>
+                </ul>
+            </div>
+            
+            <div class="event-stats" data-aos="fade-up" data-aos-duration="800" data-aos-delay="1000">
+                <div class="stat-card">
+                    <span class="stat-number">800+</span>
+                    <div class="stat-label">Attendees</div>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">4</span>
+                    <div class="stat-label">Performances</div>
+                </div>
+                
+            </div>
+        </div>
+        <!-- বাংলা গানের ভাবনা ও পথচলা : শ্রাবণ ছন্দে আনন্দে -->
+        <div id="event-8" class="event-detail-card" data-aos="fade-up" data-aos-duration="1200" data-aos-delay="200">
+            <div class="event-header">
+                <div class="event-icon-large">
+                    <span class="logo-mask-yellow" role="img" aria-label="BUCuC Logo"></span>
+                </div>
+                <div>
+                    <h2 class="event-title-large">বাংলা গানের ভাবনা ও পথচলা : শ্রাবণ ছন্দে আনন্দে</h2>
+                    <div class="event-meta">
+                        <i class="fas fa-calendar"></i>14 August, 2025, Thursday<br>
+                        <i class="fas fa-user"></i>By BUCuC<br>
+                        <i class="fas fa-map-marker-alt"></i>BRAC University Auditorium
+                    </div>
+                </div>
+            </div>
+            
+            <img src="images/slide12.jpg" alt="Event 8" class="event-image" data-aos="zoom-in" data-aos-duration="800" data-aos-delay="700">
+            
+            <div class="event-description" data-aos="fade-up" data-aos-duration="800" data-aos-delay="600">
+                <p>
+            Wrapped in the magic of music, rhythm, and heartfelt emotion, the evening stood as a celebration of unity and creativity.  
+            Not only did our talented students perform, but our beloved faculty members and staff also brought a special charm to the stage—filling the venue with warmth and soulful artistry.  
+            Their heartfelt performances lit up BRAC University’s cultural sphere with sincerity and devotion.
+            <br><br>
+            On that mesmerizing evening, the stage was graced by:
+            <br><br>
+            <strong>• Azharul Islam Bhuiyan</strong> (Finance & Accounts Department)<br>
+            <strong>• Shami Suhrid</strong> (Counseling Unit)<br>
+            <strong>• Saiduzzaman Shikder</strong> (Scholarship Office)<br>
+            <strong>• Syed Far Abid Hossain</strong> (BBS Department)<br>
+            <strong>• Shakil Haidar</strong> (ESS Department)<br>
+            <strong>• Prantor Das</strong> (OCAAR)<br>
+            <strong>• Dr. Upal Aditya Oiky</strong> (School of Law)<br>
+            <strong>• Shams Monsur Ghani</strong> (Architecture Department)<br><br>
+
+            The event was honored by the presence of our Honorable Vice Chancellor, <strong>Professor Syed Farhat Anwar</strong>, along with respected officials of the university. Their encouragement and warm presence added even more brilliance to the celebration.
+            <br><br>
+            BUCuC performers also illuminated the evening with music, dance, and heartfelt performances—making the program a true blend of faculty, staff, and student artistry.  
+            <br><br>
+            Such participation reflects that BRAC University is not only a center of academic excellence but also a vibrant cultural family.  
+            Behind this success stood the tireless dedication and love of the <strong>BRAC University Cultural Club</strong>, creating an unforgettable evening of unity and celebration.
+            <br><br>
+            <strong>Work. Bond. Glow.</strong>
+                </p>
+            </div>
+            
+            <div class="event-highlights" data-aos="fade-up" data-aos-duration="800" data-aos-delay="800">
+                <h3 class="highlights-title">Event Highlights</h3>
+                <ul class="highlights-list">
+                    <li>Faculty, staff, and students performed together in a harmonious cultural celebration.</li>
+                    <li>Participation from eight distinguished faculty and staff members across various departments.</li>
+                    <li>Honorable Vice Chancellor and university officials graced the event with their presence.</li>
+                    <li>BUCuC performers added music, dance, and artistic flair to the evening.</li>
+                    <li>A celebration that showcased BRAC University as a culturally vibrant family.</li>
+                    <li>An event filled with emotion, unity, creativity, and shared joy.</li>
+                </ul>
+            </div>
+            
+            <div class="event-stats" data-aos="fade-up" data-aos-duration="800" data-aos-delay="1000">
+                <div class="stat-card">
+                    <span class="stat-number">1000+</span>
+                    <div class="stat-label">Attendees</div>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">31</span>
+                    <div class="stat-label">Performances</div>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">5</span>
+                    <div class="stat-label">Hours</div>
+                </div>
+                
+            </div>
+        </div>
+        <!-- Boishakhi Utshob Event -->
+        <div id="country-music" class="event-detail-card" data-aos="fade-up" data-aos-duration="1200" data-aos-delay="500">
+            <div class="event-header">
+                <div class="event-icon-large">
+                    <span class="logo-mask-yellow" role="img" aria-label="BUCuC Logo"></span>
+                </div>
+                <div>
+                    <h2 class="event-title-large">বৈশাখী উৎসব ১৪৩২</h2>
+                    <div class="event-meta">
+                        <i class="fas fa-calendar"></i>28 April, 2025, Tuesday<br>
+                        <i class="fas fa-user"></i>By BUCuC<br>
+                        <i class="fas fa-map-marker-alt"></i>BRAC University Multipupose Hall & Open Space
+                    </div>
+                </div>
+            </div>
+            
+                                <img src="images/slide5.jpg" alt="Boishakhi Utshob Event" class="event-image" data-aos="zoom-in" data-aos-duration="800" data-aos-delay="700">
+            
+            <div class="event-description" data-aos="fade-up" data-aos-duration="800" data-aos-delay="900">
+<p> Boishakh — a season of light, color, and renewal.
+BRAC University welcomed <strong>Bengali New Year 1432</strong> with a campus transformed into a vibrant canvas of celebration.</p>
+
+<p>The day began with a joyful Boishakhi procession  bright smiles, colorful portraits, and hearts full of festive spirit. Under the banyan tree, music and rhythm set the perfect tone, followed by traditional village games and a lively flash mob that spread the energy of Boishakh across campus.</p>
+<p>
+Evening brought an enchanting cultural program — folk songs, graceful dances, and heartfelt recitations reflecting the soul of Bengal. The <strong>Boishakhi fair </strong>offered traditional foods, handicrafts, and the colors of Bengal in every detail, from sarees and panjabis to intricate alpana designs.</p>
+<p> 
+More than just a day, this Boishakh was a heartfelt celebration of culture, heritage, and beauty. The BRAC University Cultural Club warmly thanks everyone who made it truly memorable.</p>
+            </div>
+            
+            <div class="event-highlights" data-aos="fade-up" data-aos-duration="800" data-aos-delay="1100">
+                <h3 class="highlights-title">Event Highlights</h3>
+<ul class="highlights-list">
+    <li>Vibrant Boishakhi procession with colorful portraits and smiles</li>
+    <li>Traditional music and rhythms under the banyan tree</li>
+    <li>Village games reconnecting with Bengal's roots</li>
+    <li>Energetic flash mob spreading festive cheer</li>
+    <li>Enchanting evening of folk songs, dances, and recitations</li>
+    <li>Boishakhi fair with traditional food, crafts, and alpana art</li>
+</ul>
+            </div>
+            
+            <div class="event-stats" data-aos="fade-up" data-aos-duration="800" data-aos-delay="1300">
+                <div class="stat-card">
+                    <span class="stat-number">15000+</span>
+                    <div class="stat-label">Attendees</div>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">39</span>
+                    <div class="stat-label">Performances</div>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">20</span>
+                    <div class="stat-label">Flash Mob (Minutes)</div>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">8</span>
+                    <div class="stat-label">Hours</div>
+                </div>
+            </div>
+        </div>
+        <!-- Participation at Wild Escape by BUAC -->
+        <div id="event-9" class="event-detail-card" data-aos="fade-up" data-aos-duration="1200" data-aos-delay="250">
+            <div class="event-header">
+                <div class="event-icon-large">
+                    <span class="logo-mask-yellow" role="img" aria-label="BUCuC Logo"></span>
+                </div>
+                <div>
+                    <h2 class="event-title-large">Participation at Wild Escape by BUAC</h2>
+                    <div class="event-meta">
+                        <i class="fas fa-calendar"></i>22th April, 2025, Tuesday<br>
+                        <i class="fas fa-user"></i>By BUAC<br>
+                        <i class="fas fa-map-marker-alt"></i> BRAC University Multipurpose Hall & Lobby
+                    </div>
+                </div>
+            </div>
+            
+            <img src="images/Wild.jpg" alt="Event 9" class="event-image" data-aos="zoom-in" data-aos-duration="800" data-aos-delay="450">
+            
+            <div class="event-description" data-aos="fade-up" data-aos-duration="800" data-aos-delay="650">
+                <p><strong>The Wild Escape—A Magical Finale to a Remarkable Journey!</strong></p> <p>On 17 April, 2025, Brac University Adventure Club's thrilling two-day extravaganza came to a spectacular end. The final day carried an electric excitement—an atmosphere filled with glowing faces, proud achievements, and a sense of celebration that could be felt in every corner.</p> <p>The energy reached its peak during the vibrant award ceremony. Laughter, applause, and satisfaction rippled through the crowd as participants were recognized for their spirit and dedication throughout the adventure. It was a moment that beautifully captured the heart of the event.</p> <p>Then came the highlight of the evening—BRAC University Cultural Club stepped onto the stage and transformed it completely. With mesmerizing music and dynamic dance performances, our talented artists infused the venue with rhythmic passion, cultural richness, and contagious enthusiasm. Their performance became the radiant cultural finale, lifting the entire event to its highest and most magical point.</p> <p>We extend our heartfelt gratitude to every performer who poured their soul into the stage, to the Adventure Club for organizing such a seamless and spirited event, and to the energetic audience whose cheers lit up the day. Together, we created memories that will be cherished for years to come, strengthened meaningful bonds, and celebrated the extraordinary blend of adventure and art.</p> <p>What a beautiful moment of unity, pride, and glowing brilliance. Work. Bond. Glow. ✨ Keep your eyes open—more dazzling BUCuC showcases are on the way, ready to shine even brighter.</p>
+            </div>
+            
+            <div class="event-highlights" data-aos="fade-up" data-aos-duration="800" data-aos-delay="850">
+                <h3 class="highlights-title">Event Highlights</h3>
+                <ul class="highlights-list">
+                    <li>The Wild Escape 25.1 concluded Brac University Adventure Club's thrilling two-day journey.</li>
+                    <li>The award ceremony filled the venue with excitement, pride, and glowing smiles.</li>
+                    <li>BUCuC delivered a stunning cultural finale with captivating music and dynamic dance performances.</li>
+                    <li>Performers showcased exceptional talent, energy, and cultural richness on stage.</li>
+                    <li>A seamless and spirited event organized by Brac University Adventure Club.</li>
+                    <li>The enthusiastic audience added life and vibrance with their constant cheers.</li>
+                    <li>A memorable moment of unity, celebration, and BUCuC's radiant glow.</li>
+                </ul>
+            </div>
+            
+            <div class="event-stats" data-aos="fade-up" data-aos-duration="800" data-aos-delay="1050">
+                <div class="stat-card">
+                    <span class="stat-number">250+</span>
+                    <div class="stat-label">Attendees</div>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">10</span>
+                    <div class="stat-label">Performances</div>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">3</span>
+                    <div class="stat-label">Hours</div>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+        <!-- Rhythm Revive 25.0 -->
+        <div id="pop-night" class="event-detail-card" data-aos="fade-up" data-aos-duration="1200" data-aos-delay="200">
+            <div class="event-header">
+                <div class="event-icon-large">
+                    <span class="logo-mask-yellow" role="img" aria-label="BUCuC Logo"></span>
+                </div>
+                <div>
+                    <h2 class="event-title-large">Rhythm Revive 25.0</h2>
+                    <div class="event-meta">
+                        <i class="fas fa-calendar"></i>17 April, 2025, Thursday<br>
+                        <i class="fas fa-user"></i>By BUCuC<br>
+                        <i class="fas fa-map-marker-alt"></i>BRAC University Auditorium
+                    </div>
+                </div>
+            </div>
+            
+            <img src="images/slide2.jpg" alt="Pop Night Event" class="event-image" data-aos="zoom-in" data-aos-duration="800" data-aos-delay="400">
+            
+            <div class="event-description" data-aos="fade-up" data-aos-duration="800" data-aos-delay="600">
+                <p>The Wild Escape—A Magical Finale to a Remarkable Journey! 
+17 April, 2025 | Brac University Adventure Club's thrilling 2-day extravaganza came to a spectacular close.
+The weekend was nothing short of unforgettable! As the Adventure Club wrapped up The Wild Escape, the energy peaked during the vibrant award ceremony; glowing faces all around, satisfaction and celebration in the air.</p>
+                
+                <p>Brac University Cultural Club then set the stage on fire! With mesmerizing music and dance, our gifted performers filled the atmosphere with rhythmic passion, cultural richness, and contagious enthusiasm. Their act was the crowning jewel—a radiant cultural finale that lifted the entire event to its highest point.
+Immense gratitude to every performer who poured their heart onto the stage, the Adventure Club for orchestrating a seamless and spirited event, and the energetic audience whose cheers illuminated the day.
+Together, we painted memories that will last a lifetime, strengthened our bonds, and celebrated brilliance in both adventure and art. What a magical moment of unity, pride, and vibrant glow!
+Work. Bond. Glow.</p>
+<p>Keep your eyes peeled—more dazzling showcases are coming soon. Until then, let the BUCuC spirit shine bright</p>
+            </div>
+            
+            <div class="event-highlights" data-aos="fade-up" data-aos-duration="800" data-aos-delay="800">
+                <h3 class="highlights-title">Event Highlights</h3>
+                <ul class="highlights-list">
+                    <li>Stunning vocal performances by club members</li>
+                    <li>Interactive audience participation segments</li>
+                    <li>Professional sound and lighting setup</li>
+                    <li>Special guest performances</li>
+                    <li>Memorable group performances</li>
+                    <li>Amazing stage decorations and effects</li>
+                </ul>
+            </div>
+            
+            <div class="event-stats" data-aos="fade-up" data-aos-duration="800" data-aos-delay="1000">
+                <div class="stat-card">
+                    <span class="stat-number">450+</span>
+                    <div class="stat-label">Attendees</div>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">22</span>
+                    <div class="stat-label">Performances</div>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">5</span>
+                    <div class="stat-label">Hours</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- BUCuC Iftar Night Event -->
+        <div id="dj-night" class="event-detail-card" data-aos="fade-up" data-aos-duration="1200" data-aos-delay="400">
+            <div class="event-header">
+                <div class="event-icon-large">
+                    <span class="logo-mask-yellow" role="img" aria-label="BUCuC Logo"></span>
+                </div>
+                <div>
+                    <h2 class="event-title-large">BUCuC Iftar 2025</h2>
+                    <div class="event-meta">
+                        <i class="fas fa-calendar"></i>10 March, 2025, Monday<br>
+                        <i class="fas fa-user"></i>By BUCuC<br>
+                        <i class="fas fa-map-marker-alt"></i>BRAC University Cafeteria
+                    </div>
+                </div>
+            </div>
+            
+                                <img src="images/slide4.jpg" alt="BUCuC Iftar Night Event" class="event-image" data-aos="zoom-in" data-aos-duration="800" data-aos-delay="600">
+            
+            <div class="event-description" data-aos="fade-up" data-aos-duration="800" data-aos-delay="800">
+                <p>March 10th at BRAC University wasn't just another evening—it was a reunion of hearts. The BRAC University Cultural Club gathered for their Iftar Mahfil, where Mentors, the current Panel, and General Members came together under one roof.</p>
+                
+                <p>As the sky blushed with sunset, the call to prayer signaled the moment everyone had been waiting for. Dates were shared, water poured, and laughter mingled with the aroma of iftar. It was a table not just of food, but of friendship and memories.</p>
+                <p>The celebrations didn't end there. A surprise birthday for General Secretary Nafisa Noor turned the room into a whirlwind of cheers and cake. Then came the BUCuC signature—an impromptu jamming session. Guitars, claps, and voices rose in unison, creating a soundtrack for the night.</p>
+
+<p>In those few hours, nostalgia met new memories, and BUCuC's spirit shone brighter than ever.</p>
+            </div>
+            
+            <div class="event-highlights" data-aos="fade-up" data-aos-duration="800" data-aos-delay="1000">
+                <h3 class="highlights-title">Event Highlights</h3>
+                <ul class="highlights-list">
+                    <li>Who Attended: Mentors, current Panel, Secretary, Assistant Secretary, and General Members</li>
+                    <li> Iftar Moment: Breaking fast together with gratitude and shared stories</li>
+                    <li> Special Celebration: Surprise birthday for General Secretary Nafisa Noor</li>
+                    <li>Signature BUCuC Touch: Energetic jamming session with Mentors and members</li>
+                    <li>Atmosphere: Nostalgia, laughter, music, and togetherness</li>
+                    <li> Essence of the Night: WORK. BOND. GLOW.</li>
+                </ul>
+            </div>
+            
+            <div class="event-stats" data-aos="fade-up" data-aos-duration="800" data-aos-delay="1200">
+                <div class="stat-card">
+                    <span class="stat-number">170+</span>
+                    <div class="stat-label">Attendees</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Panel Handover Event -->
+        <div id="rock-roll" class="event-detail-card" data-aos="fade-up" data-aos-duration="1200" data-aos-delay="300">
+            <div class="event-header">
+                <div class="event-icon-large">
+                    <span class="logo-mask-yellow" role="img" aria-label="BUCuC Logo"></span>
+                </div>
+                <div>
+                    <h2 class="event-title-large">Panel 2025-26 Handover</h2>
+                    <div class="event-meta">
+                        <i class="fas fa-calendar"></i>11 February, 2025, Tuesday<br>
+                        <i class="fas fa-user"></i>By BUCuC<br>
+                        <i class="fas fa-map-marker-alt"></i>BRAC University Open Space
+                    </div>
+                </div>
+            </div>
+            
+                                <img src="images/slide3.jpg" alt="Panel Handover Event" class="event-image event-image-panel-handover" data-aos="zoom-in" data-aos-duration="800" data-aos-delay="500">
+            
+            <div class="event-description" data-aos="fade-up" data-aos-duration="800" data-aos-delay="700">
+                <p>It was a day of change, emotion, and promise for BRAC University Cultural Club – BUCuC.
+On 11th February 2025, the campus buzzed with anticipation as members gathered to witness a special chapter unfold. The event opened with the outgoing 2024-2025 panel taking the stage, their voices carrying both pride and nostalgia. They looked back on the laughter, challenges, and triumphs that had shaped their journey, leaving the audience touched by their heartfelt words.</p>
+                
+                <p>Then came the moment everyone was waiting for — the unveiling of the 2025-2026 panel. With bright eyes and bold visions, the new leaders shared their plans to carry BUCuC into an exciting future. The atmosphere brimmed with applause and encouragement as dedicated ASBs and SBs were promoted, each recognition met with warm smiles and cheers.</p>
+                <p> Speeches followed — not just from the panel, but from SBs themselves — weaving dreams of unity, creativity, and growth. By the end of the day, it wasn’t just an event; it was a passing of the torch, a celebration of achievements, and the start of a brand-new journey.</p>
+
+<p>Then, as if guided by tradition, the BUCuC jamming session began. Guitars strummed, voices rose, and even the Mentors joined in, creating a wave of rhythm and harmony that carried the night forward. Music spilled into every corner, blending past and present into a single, timeless moment.</p>
+<p>
+It was more than just an event—it was a living portrait of BUCuC’s spirit:<strong> WORK. BOND. GLOW. 
+
+</strong> </p>
+            </div>
+            
+            <div class="event-highlights" data-aos="fade-up" data-aos-duration="800" data-aos-delay="900">
+                <h3 class="highlights-title">Event Highlights</h3>
+                <ul class="highlights-list">
+                    <li>Epic guitar solos and instrumental performances</li>
+                    <li>Full band setups with drums, bass, and keyboards</li>
+                    <li>Classic rock anthem sing-alongs</li>
+                    <li>Professional stage lighting and effects</li>
+                    <li>Guest performances from music department</li>
+                    <li>Rock music trivia and interactive segments</li>
+                </ul>
+            </div>
+            
+            <div class="event-stats" data-aos="fade-up" data-aos-duration="800" data-aos-delay="1100">
+                <div class="stat-card">
+                    <span class="stat-number">200+</span>
+                    <div class="stat-label">Attendees</div>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">3</span>
+                    <div class="stat-label">Hours</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Participation at উচ্ছ্বাসে স্পন্দন -->
+        <div id="free-styles" class="event-detail-card" data-aos="fade-up" data-aos-duration="1200" data-aos-delay="600">
+            <div class="event-header">
+                <div class="event-icon-large">
+                    <span class="logo-mask-yellow" role="img" aria-label="BUCuC Logo"></span>
+                </div>
+                <div>
+                    <h2 class="event-title-large">Participation at উচ্ছ্বাসে স্পন্দন by AUSTCC</h2>
+                    <div class="event-meta">
+                        <i class="fas fa-calendar"></i>9 February, 2025, Sunday<br>
+                        <i class="fas fa-user"></i>BUCuC Members<br>
+                        <i class="fas fa-map-marker-alt"></i>Ahsanullah University of Science and Technology, Dhaka
+                    </div>
+                </div>
+            </div>
+            
+                                <img src="images/slide1.jpg" alt="Cage Champions Event" class="event-image" data-aos="zoom-in" data-aos-duration="800" data-aos-delay="800">
+            
+            <div class="event-description" data-aos="fade-up" data-aos-duration="800" data-aos-delay="1000">
+<p>At "উচ্ছ্বাসে স্পন্দন"—an Inter University Cultural Competition hosted by AUST Cultural Club—the stage lit up with passion, rhythm, and energy. Among the many vibrant teams, it was BRAC University Cultural Club (BUCuC) that stole the spotlight.</p>
+<p>With voices that soared and music that stirred every heart in the hall, BUCuC rose to the top and became the Champion in Music. And when the beats shifted to dance, their graceful yet powerful moves earned them the title of 1st Runner Up in Dance.</p>
+<p>With voices that soared and music that stirred every heart in the hall, BUCuC rose to the top and became the Champion in Music. And when the beats shifted to dance, their graceful yet powerful moves earned them the title of 1st Runner Up in Dance.</p>
+<p>And this is only the beginning of the journey. Work. Bond. Glow. ✨</p>
+            </div>
+<div class="event-highlights" data-aos="fade-up" data-aos-duration="800" data-aos-delay="1200">
+    <h3 class="highlights-title">Event Highlights</h3>
+    <ul class="highlights-list">
+        <li>BUCuC shined at "উচ্ছ্বাসে স্পন্দন", an Inter University Cultural Competition hosted by AUST Cultural Club.</li>
+        <li>Champion in Music – BUCuC's powerful and soulful performances won hearts and the top prize.</li>
+        <li>1st Runner Up in Dance – Their graceful yet dynamic moves impressed the judges and audience alike</li>
+        <li>The team showcased unmatched energy, creativity, and dedication throughout the competition</li>
+        <li>BUCuC's success made BRAC University stand out proudly among all participating universities.</li>
+        <li>A historic win for BUCuC's very own</li>
+    </ul>
+</div>
+
+            
+            <div class="event-stats" data-aos="fade-up" data-aos-duration="800" data-aos-delay="1400">
+                <div class="stat-card">
+                    <span class="stat-number">2000+</span>
+                    <div class="stat-label">Attendees</div>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">2</span>
+                    <div class="stat-label">Competing Segments</div>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">2</span>
+                    <div class="stat-label">Achievements</div>
+                </div>
+            </div>
+        </div>
+        <!-- Rythm Revive 24.0 -->
+        <div id="event-10" class="event-detail-card" data-aos="fade-up" data-aos-duration="1200" data-aos-delay="300">
+            <div class="event-header">
+                <div class="event-icon-large">
+                    <span class="logo-mask-yellow" role="img" aria-label="BUCuC Logo"></span>
+                </div>
+                <div>
+                    <h2 class="event-title-large">Rythm Revive 24.0</h2>
+                    <div class="event-meta">
+                        <i class="fas fa-calendar"></i>30th December,2024, Monday<br>
+                        <i class="fas fa-user"></i>By BUCuC<br>
+                        <i class="fas fa-map-marker-alt"></i>BRAC University Multipurpose Hall & Auditorium
+                    </div>
+                </div>
+            </div>
+            
+            <img src="images/qwe.jpg" alt="Event 10" class="event-image event-image-qwe" data-aos="zoom-in" data-aos-duration="800" data-aos-delay="500">
+            
+            <div class="event-description" data-aos="fade-up" data-aos-duration="800" data-aos-delay="700">
+                <p>
+            As the curtain closed on the 2023–25 Presidential Panel of BUCuC, we gathered for a two-day celebration filled with nostalgia, artistry, energy, and heartfelt emotion. <strong>Rhythm Revive 24.0</strong> was not just a farewell — it was a tribute to creativity, unity, and the unforgettable legacy we built together. Months of rehearsals, planning, and shared dreams culminated in two nights of pure magic.
+            <br><br>
+
+            <strong>✨ Day 1: The Show of Hearts — A Journey into Classical Thumri</strong><br>
+            The first day belonged entirely to our members — a vibrant mosaic of dance, music, drama, and expressive storytelling. The highlight of the evening was a breathtaking <strong>30-minute classical live-music and dance Thumri</strong>, a performance crafted from months of passion, persistence, and artistic discipline.
+            <br><br>
+
+            <strong>The Thumri Performance</strong> brought together lyrical poetry, emotional nuance, and live improvisation — blending classical melody with expressive movement. Our dancers — <em>Nafisa Noor, Shemonti, Poroma, Mitisha, Diana, Arora, Faiza, and Mansura</em> — embodied the essence of longing, devotion, and storytelling through graceful expressions and synchronized choreography.
+            <br><br>
+
+            Behind them, our musicians built the emotional landscape:<br><br>
+            <strong>Vocal & Harmonium:</strong> Avibadhan Das<br>
+            <strong>Tabla:</strong> Aparup Chowdhury<br>
+            <strong>Cajon & Darbuka:</strong> Ayam Dhar<br>
+            <strong>Benjo:</strong> Andalib Mostafa Lalon<br>
+            <strong>Guitar:</strong> Almas Ovi, Shafawath Alam<br>
+            <strong>Keyboard:</strong> Farhan Ishraq<br>
+            <strong>Dholok:</strong> Imtiaz Salam Jami<br>
+            <strong>Bass:</strong> Tahmid Rayan<br><br>
+
+            For half an hour, music and movement merged into a shared heartbeat — a farewell gift to our outgoing leaders and a testament to BUCuC’s artistic soul.
+            <br><br>
+
+            <strong>✨ Day 2: The Light, Energy & Farewell Concert</strong><br>
+            Day 2 embraced a vibrant shift — from classical depth to youthful energy. Bands took the stage, filling the night with rhythm and celebration. The grand finale featured beloved artists: <strong>Level Five</strong> and <strong>Indalo</strong>, whose performances ignited cheers, nostalgia, and the emotion of closing an era.
+            <br><br>
+
+            Through music and memory, they connected our past, present, and future — reminding us of the journey that shaped us.
+            <br><br>
+
+            <strong>A Farewell, A Legacy, A New Beginning</strong><br>
+            This two-day festival was not just an ending — it was a celebration of dreams fulfilled, challenges overcome, and friendships forged through art. To the Presidential Panel of 2023–25: your leadership guided us toward this unforgettable chapter. And to every performer, musician, dancer, organizer, and volunteer — you transformed vision into reality.
+            <br><br>
+
+            As we turn the page, we welcome a new beginning. May the spirit of Rhythm Revive inspire the next generation to shine even brighter.
+            <br><br>
+
+            <strong>Because BUCuC is not just a club — it’s a legacy.</strong><br><br>
+            <strong>Work. Bond. Glow.</strong> ✨
+        </p>
+            </div>
+            
+            <div class="event-highlights" data-aos="fade-up" data-aos-duration="800" data-aos-delay="900">
+                <h3 class="highlights-title">Event Highlights</h3>
+                <ul class="highlights-list">
+                    <li>Two-day farewell celebration for the 2023–25 Presidential Panel.</li>
+                    <li>Day 1 featured member-exclusive performances across music, dance, and drama.</li>
+                    <li>Crowning moment: a 30-minute live classical Thumri performance with dance & live orchestra.</li>
+                    <li>Day 2 was a high-energy concert with performances from multiple bands.</li>
+                    <li>Grand finale by Level Five and Indalo.</li>
+                    <li>A celebration of unity, creativity, and the enduring spirit of BUCuC.</li>
+                </ul>
+            </div>
+            
+            <div class="event-stats" data-aos="fade-up" data-aos-duration="800" data-aos-delay="1100">
+                <div class="stat-card">
+                    <span class="stat-number">15000+</span>
+                    <div class="stat-label">Attendees</div>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">31</span>
+                    <div class="stat-label">Day 1: Performances</div>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">8</span>
+                    <div class="stat-label">Day 1 : Hours</div>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">5</span>
+                    <div class="stat-label">Day 2: Bands</div>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">6</span>
+                    <div class="stat-label">Day 2 : Hours</div>
+                </div>
+            </div>
+        </div>
+        <!-- A Magical Qawali Night at AquaVenture: Club Fair Fall '24 ✨ -->
+        <div id="event-10" class="event-detail-card" data-aos="fade-up" data-aos-duration="1200" data-aos-delay="300">
+            <div class="event-header">
+                <div class="event-icon-large">
+                    <span class="logo-mask-yellow" role="img" aria-label="BUCuC Logo"></span>
+                </div>
+                <div>
+                    <h2 class="event-title-large">A Magical Qawali Night at AquaVenture: Club Fair Fall ’24 ✨</h2>
+                    <div class="event-meta">
+                        <i class="fas fa-calendar"></i>11th November,2024, Monday<br>
+                        <i class="fas fa-user"></i>By BUCuC<br>
+                        <i class="fas fa-map-marker-alt"></i>BRAC University Multipurpose Hall
+                    </div>
+                </div>
+            </div>
+            
+            <img src="images/slide6_n.jpg" alt="Event 10" class="event-image" data-aos="zoom-in" data-aos-duration="800" data-aos-delay="500">
+            
+            <div class="event-description" data-aos="fade-up" data-aos-duration="800" data-aos-delay="700">
+                <p>The BRAC University Multipurpose Hall transformed into a space of pure musical enchantment as BRAC University Cultural Club (BUCuC) presented a soul-stirring Qawali performance at “AquaVenture: Club Fair Fall ’24,” proudly organized by BRAC University Adventure Club (BUAC). What was expected to be a regular club fair showcase soon turned into a transcendent experience—one that left the entire audience mesmerized.</p> <p>Despite a slight delay, the excitement never faded. In fact, anticipation only grew stronger. Students filled every corner of the hall—standing, sitting on the floor, leaning against the walls—waiting eagerly for BUCuC’s Qawali segment. And the moment the first chord touched the air, the atmosphere shifted. It felt magical.</p> <p><strong>A Performance That Touched Hearts</strong></p> <p>The 20-minute performance flowed like a spiritual journey through timeless classics—<em>“Yeh Jo Halka Halka Suroor,” “Kali Kali Zulfon,”</em> and <em>“Kun Faya Kun.”</em> The true magic unfolded when the crowd began to sing along, their voices merging with the performers in a unified chorus filled with devotion, nostalgia, and serenity. For a moment, the entire hall shared the same heartbeat.</p> <p>What filled the space was more than music—it was peace, warmth, and a sense of togetherness that only heartfelt Qawali can create. Many later said it was one of the most memorable musical moments they had experienced at BRAC University.</p> <p><strong>The Artists Behind the Magic</strong></p> <p>BUCuC’s finest performers came together to craft this unforgettable evening:</p> <p><strong>Main Vocal:</strong> Avibadhan Das<br> <strong>Chorus:</strong> Meer Abrar Ahmad & Partho<br> <strong>Tabla:</strong> Aparup Chowdhury<br> <strong>Kahon:</strong> Ayam Niloy<br> <strong>Guitar 1:</strong> Meer Abrar Ahmad<br> <strong>Guitar 2:</strong> Partho Protim Haldar<br> <strong>Keyboard:</strong> Farhan Ishraq<br> <strong>Bass:</strong> Sayeed Imam<br> <strong>Percussion:</strong> Habib Hasan</p> <p>Each artist added a unique layer—rich vocals, rhythmic tabla strokes, soothing guitar lines, entrancing percussion, and harmonies that wrapped the hall in mystique. Together, they created a soundscape that felt almost divine.</p> <p><strong>A Night to Remember</strong></p> <p>The Qawali night at AquaVenture was more than a performance—it was a shared emotional experience, a celebration of culture, and a beautiful reminder of the power of music to connect and heal. BUCuC once again proved its ability to create magic on stage, leaving every listener touched by the moment.</p> <p>The hall eventually emptied, but the feeling stayed. For everyone who witnessed it, this night will remain one of the most unforgettable musical highlights of Club Fair Fall ’24.</p>
+            </div>
+            
+            <div class="event-highlights" data-aos="fade-up" data-aos-duration="800" data-aos-delay="900">
+                <h3 class="highlights-title">Event Highlights</h3>
+                <ul class="highlights-list">
+                    <li>The Wild Escape — a magical finale marking the end of Brac University Adventure Club’s remarkable two-day adventure.</li>
+                    <li>The award ceremony lit up the atmosphere with excitement, pride, and joyful celebration.</li>
+                    <li>BUCuC delivered a breathtaking cultural finale filled with captivating music and electrifying dance.</li>
+                    <li>Performers showcased outstanding talent, passion, and cultural depth on stage.</li>
+                    <li>The Adventure Club orchestrated a seamless, energetic, and unforgettable event experience.</li>
+                    <li>The lively audience amplified the moment with their cheers, enthusiasm, and vibrant spirit.</li>
+                    <li>A heartwarming celebration of unity, creativity, and the ever-glowing BUCuC spirit.</li>
+                </ul>
+            </div>
+            
+            <div class="event-stats" data-aos="fade-up" data-aos-duration="800" data-aos-delay="1100">
+                <div class="stat-card">
+                    <span class="stat-number">2000+</span>
+                    <div class="stat-label">Attendees</div>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">1</span>
+                    <div class="stat-label">Qawali Songs</div>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">30</span>
+                    <div class="stat-label">Minutes</div>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+    </div>
+    
+    <!-- Bootstrap JS -->
+    <script src="js/bootstrap.min.js"></script>
+    
+    <!-- AOS Animation Library -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    
+    <script>
+        // Initialize AOS
+        AOS.init({
+            duration: 1000,
+            easing: 'ease-in-out',
+            once: true,
+            mirror: false
+        });
+        
+        // Create floating particles
+        function createParticles() {
+            const particlesBg = document.getElementById('particlesBg');
+            const particleCount = 25; // Reduced from 50
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.top = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 4 + 's'; // Reduced from 6s
+                particle.style.animationDuration = (Math.random() * 2 + 2) + 's'; // Reduced from 3+3s
+                particlesBg.appendChild(particle);
+            }
+        }
+        
+        // Loading screen - faster transition
+        window.addEventListener('load', function() {
+            const loadingOverlay = document.getElementById('loadingOverlay');
+            setTimeout(() => {
+                loadingOverlay.style.opacity = '0';
+                setTimeout(() => {
+                    loadingOverlay.style.display = 'none';
+                }, 300); // Reduced from 500ms
+            }, 800); // Reduced from 1500ms
+        });
+        
+        // Smooth scrolling for anchor links
+        document.addEventListener('DOMContentLoaded', function() {
+            // Create particles with slight delay
+            setTimeout(createParticles, 100);
+            
+            // Check if there's a hash in the URL and scroll to that section
+            if (window.location.hash) {
+                const targetElement = document.querySelector(window.location.hash);
+                if (targetElement) {
+                    setTimeout(() => {
+                        targetElement.scrollIntoView({ behavior: 'smooth' });
+                    }, 100);
+                }
+            }
+            
+            // Initialize counting animation
+            initCountingAnimation();
+        });
+        
+        // Enhanced counting animation function
+        function initCountingAnimation() {
+            const statNumbers = document.querySelectorAll('.stat-number');
+            
+            // Create intersection observer to trigger animation when elements come into view
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const target = entry.target;
+                        if (!target.classList.contains('animated')) {
+                            animateNumber(target);
+                            target.classList.add('animated');
+                        }
+                    }
+                });
+            }, {
+                threshold: 0.3, // Reduced from 0.5 for earlier triggering
+                rootMargin: '0px 0px -30px 0px' // Reduced from -50px
+            });
+            
+            // Observe all stat numbers
+            statNumbers.forEach(stat => {
+                observer.observe(stat);
+            });
+        }
+        
+        // Enhanced animate individual number - faster animation
+        function animateNumber(element) {
+            const finalText = element.textContent;
+            const finalNumber = parseInt(finalText.replace(/\D/g, '')); // Extract number
+            const hasPlus = finalText.includes('+');
+            
+            let currentNumber = 0;
+            const duration = 1800; // Reduced from 2500ms
+            const steps = 60; // Reduced from 80 for faster updates
+            const increment = finalNumber / steps;
+            const stepDuration = duration / steps;
+            
+            // Add a subtle bounce effect
+            element.style.transform = 'scale(1.05)'; // Reduced from 1.1
+            setTimeout(() => {
+                element.style.transform = 'scale(1)';
+            }, 80); // Reduced from 100ms
+            
+            const timer = setInterval(() => {
+                currentNumber += increment;
+                
+                if (currentNumber >= finalNumber) {
+                    currentNumber = finalNumber;
+                    clearInterval(timer);
+                    
+                    // Final bounce effect
+                    element.style.transform = 'scale(1.02)'; // Reduced from 1.05
+                    setTimeout(() => {
+                        element.style.transform = 'scale(1)';
+                    }, 150); // Reduced from 200ms
+                }
+                
+                // Format the number with plus sign if needed
+                const displayText = hasPlus ? Math.floor(currentNumber) + '+' : Math.floor(currentNumber);
+                element.textContent = displayText;
+            }, stepDuration);
+        }
+        
+        // Parallax effect for particles - optimized
+        let ticking = false;
+        window.addEventListener('scroll', function() {
+            if (!ticking) {
+                requestAnimationFrame(function() {
+                    const scrolled = window.pageYOffset;
+                    const particles = document.querySelectorAll('.particle');
+                    
+                    particles.forEach((particle, index) => {
+                        const speed = 0.3 + (index % 2) * 0.1; // Reduced speed
+                        particle.style.transform = `translateY(${scrolled * speed}px)`;
+                    });
+                    ticking = false;
+                });
+                ticking = true;
+            }
+        });
+    </script>
+</body>
+</html> 
