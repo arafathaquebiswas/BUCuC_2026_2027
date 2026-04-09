@@ -2283,9 +2283,14 @@ https://templatemo.com/tm-583-festava-live
                 <video id="heroBannerVideo"
                        playsinline
                        loop
+                       muted
                        style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;">
+                    <source src="video/bucuc1.mp4" type="video/mp4">
                     <source src="video/bucuc1.webm" type="video/webm">
                 </video>
+                <button id="muteToggleBtn" class="audio-toggle-btn" title="Click to unmute">
+                    <i class="bi bi-volume-mute-fill" id="muteIcon"></i>
+                </button>
             </div>
 
         </section>
@@ -5760,16 +5765,28 @@ ${message}
         // Hero banner video
         (function () {
             const video = document.getElementById('heroBannerVideo');
+            const btn   = document.getElementById('muteToggleBtn');
+            const icon  = document.getElementById('muteIcon');
             if (!video) return;
 
-            video.muted  = false;
+            // Must start muted — all browsers block unmuted autoplay
+            video.muted  = true;
             video.volume = 1;
+            video.play().catch(function () { /* autoplay fully blocked */ });
 
-            video.play().catch(function () {
-                // Browser blocked unmuted autoplay — fall back to muted
-                video.muted = true;
-                video.play().catch(function () { /* autoplay fully blocked */ });
+            function updateIcon() {
+                icon.className = video.muted
+                    ? 'bi bi-volume-mute-fill'
+                    : 'bi bi-volume-up-fill';
+                btn.title = video.muted ? 'Click to unmute' : 'Click to mute';
+            }
+
+            btn.addEventListener('click', function () {
+                video.muted = !video.muted;
+                updateIcon();
             });
+
+            updateIcon();
         })();
 
         // QR Code Hash Navigation Handler
