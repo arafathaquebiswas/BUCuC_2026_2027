@@ -1750,6 +1750,374 @@ $signupEnabled = getSignupStatus();
         }
     </style>
     <style>
+        /* ============================================================
+           GLOBAL RESPONSIVE FOUNDATION
+        ============================================================ */
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+        }
+
+        html, body {
+            overflow-x: hidden;
+            max-width: 100%;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        /* ============================================================
+           TYPOGRAPHY — fluid scale across breakpoints
+        ============================================================ */
+
+        /* Tablet */
+        @media (max-width: 1024px) {
+            h1 { font-size: clamp(1.6rem, 4vw, 2.4rem); }
+            h2 { font-size: clamp(1.4rem, 3.5vw, 2rem); }
+            h3 { font-size: clamp(1.1rem, 3vw, 1.6rem); }
+        }
+
+        /* Mobile */
+        @media (max-width: 767px) {
+            h1 { font-size: clamp(1.3rem, 5vw, 1.8rem); }
+            h2 { font-size: clamp(1.2rem, 4.5vw, 1.6rem); }
+            h3 { font-size: clamp(1rem, 4vw, 1.3rem); }
+            p  { font-size: 0.95rem; line-height: 1.7; }
+        }
+
+        /* ============================================================
+           HERO SECTION
+        ============================================================ */
+        @media (max-width: 1024px) {
+            .hero-section .col-lg-12[style*="gap: 15rem"] {
+                gap: 3rem !important;
+            }
+        }
+
+        @media (max-width: 767px) {
+            .hero-section {
+                min-height: 100svh;
+            }
+
+            .hero-section h1 {
+                font-size: clamp(1.1rem, 5vw, 1.6rem);
+                letter-spacing: 1px;
+                margin-top: 0.3em;
+            }
+
+            /* Stack location + social links vertically, remove huge gap */
+            .hero-section .col-lg-12[style*="gap"] {
+                flex-direction: column !important;
+                gap: 1rem !important;
+                align-items: center !important;
+            }
+
+            .hero-section .date-wrap h5,
+            .hero-section .location-wrap h5 {
+                font-size: 0.85rem;
+                text-align: center;
+            }
+
+            /* Social icons — tighter on mobile */
+            .social-icon {
+                gap: 8px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .social-icon .social-icon-link {
+                width: 36px;
+                height: 36px;
+                font-size: 1rem;
+            }
+
+            /* Sound button — smaller on mobile */
+            .video-audio-btn {
+                bottom: 12px;
+                right: 12px;
+                padding: 8px 12px;
+                font-size: 12px;
+                border-radius: 6px;
+            }
+        }
+
+        /* ============================================================
+           PANEL MEMBERS SECTION
+        ============================================================ */
+
+        /* Tablet: 2-column, controlled width */
+        @media (max-width: 1024px) and (min-width: 768px) {
+            .panel-members-grid .col-lg-6 {
+                flex: 0 0 50%;
+                max-width: 50%;
+            }
+
+            .panel-member-card .pmc-body {
+                padding: 12px 14px 16px;
+            }
+        }
+
+        /* Mobile: single column, constrained card width for aesthetics */
+        @media (max-width: 767px) {
+            .panel-members-grid {
+                gap: 1rem !important;
+            }
+
+            .panel-members-grid .col-lg-6,
+            .panel-members-grid .col-lg-5,
+            .panel-members-grid .pmc-col {
+                flex: 0 0 100%;
+                max-width: 100%;
+            }
+
+            /* Center card, limit width so it doesn't look stretched */
+            .panel-member-card {
+                max-width: 340px;
+                margin-left: auto;
+                margin-right: auto;
+                /* Disable hover lift on touch devices */
+                transform: none !important;
+            }
+
+            /* Reduce aspect ratio height on small screens */
+            .panel-member-card .pmc-image-wrap {
+                aspect-ratio: 3 / 4;
+            }
+
+            .panel-member-card .pmc-body {
+                padding: 10px 12px 14px;
+            }
+
+            .panel-member-card .pmc-name {
+                font-size: 0.95rem;
+            }
+
+            .panel-member-card .pmc-role {
+                font-size: 0.72rem;
+            }
+
+            /* Three-member layout override */
+            .three-member .panel-members-grid {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .three-member .panel-members-grid .col-lg-5 {
+                max-width: 340px;
+                width: 100%;
+            }
+        }
+
+        /* ============================================================
+           SECRETARY (SB) SECTION
+        ============================================================ */
+        @media (max-width: 1024px) {
+            .sb-section-title {
+                font-size: 2rem;
+                margin-bottom: 28px;
+            }
+
+            .sb-swiper .swiper-slide {
+                width: 260px;
+                height: 260px;
+            }
+        }
+
+        @media (max-width: 767px) {
+            .sb-section {
+                padding: 60px 0 40px;
+            }
+
+            .sb-section-title {
+                font-size: 1.6rem;
+                margin-bottom: 20px;
+                padding: 0 16px;
+            }
+
+            .sb-swiper {
+                padding: 20px 0 80px;
+            }
+
+            .sb-swiper .swiper-slide {
+                width: 220px;
+                height: 220px;
+                border-radius: 8px;
+            }
+
+            .member-name {
+                font-size: 0.9rem;
+            }
+
+            .member-name .name {
+                font-size: 0.85rem;
+            }
+
+            .member-name .position {
+                font-size: 0.7rem;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .sb-swiper .swiper-slide {
+                width: 180px;
+                height: 180px;
+            }
+        }
+
+        /* ============================================================
+           ABOUT / GENERAL CONTENT SECTIONS
+        ============================================================ */
+        @media (max-width: 1024px) {
+            .section-padding {
+                padding-top: 80px;
+                padding-bottom: 80px;
+            }
+        }
+
+        @media (max-width: 767px) {
+            .section-padding {
+                padding-top: 50px;
+                padding-bottom: 50px;
+            }
+
+            /* Stack about-section image + text vertically */
+            .about-section .row,
+            .contact-section .row {
+                flex-direction: column;
+            }
+
+            .about-section .col-lg-6,
+            .contact-section .col-lg-6 {
+                flex: 0 0 100%;
+                max-width: 100%;
+            }
+
+            /* Images in content sections */
+            .about-section img,
+            .site-header img:not(.navbar-brand img),
+            .artists-section img {
+                width: 100%;
+                height: auto;
+                object-fit: cover;
+                border-radius: 12px;
+            }
+
+            /* Event schedule header */
+            .event-schedule-header {
+                font-size: 1.6rem !important;
+                padding: 0 12px;
+            }
+
+            /* Event cards */
+            .event-card-content {
+                padding: 16px 10px !important;
+            }
+        }
+
+        /* ============================================================
+           NAVIGATION — fine-tune for tablet
+        ============================================================ */
+        @media (max-width: 1024px) and (min-width: 768px) {
+            .navbar .nav-link {
+                font-size: 0.85rem;
+                padding: 0.4rem 0.6rem;
+            }
+
+            .navbar-brand img {
+                max-height: 36px;
+            }
+        }
+
+        @media (max-width: 767px) {
+            /* Ensure navbar brand text doesn't overflow */
+            .navbar-brand {
+                font-size: 1rem;
+                max-width: calc(100% - 60px);
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+
+            .navbar-brand img {
+                max-height: 32px;
+                width: auto;
+            }
+        }
+
+        /* ============================================================
+           CARD / MODAL RESPONSIVE POLISH
+        ============================================================ */
+        @media (max-width: 767px) {
+            /* Previous panels modal cards */
+            .panel-card {
+                min-height: 120px !important;
+                padding: 10px !important;
+            }
+
+            .panel-card img {
+                max-height: 70px !important;
+            }
+
+            /* General card spacing */
+            .card {
+                margin-bottom: 16px;
+            }
+        }
+
+        /* ============================================================
+           FORM SECTIONS
+        ============================================================ */
+        @media (max-width: 767px) {
+            .custom-form {
+                padding: 24px 16px !important;
+            }
+
+            .form-control,
+            .form-select {
+                font-size: 16px; /* prevents iOS auto-zoom on focus */
+            }
+        }
+
+        /* ============================================================
+           GOOGLE MAP
+        ============================================================ */
+        @media (max-width: 767px) {
+            iframe[src*="google.com/maps"] {
+                width: 100% !important;
+                height: 220px !important;
+                border-radius: 12px !important;
+            }
+        }
+
+        /* ============================================================
+           UTILITY — prevent content bleed on all screens
+        ============================================================ */
+        .container,
+        .container-fluid {
+            padding-left: 16px;
+            padding-right: 16px;
+        }
+
+        @media (max-width: 767px) {
+            /* Remove any inline horizontal margin that causes bleed */
+            [style*="margin-left: -"],
+            [style*="margin-right: -"] {
+                margin-left: 0 !important;
+                margin-right: 0 !important;
+            }
+
+            /* Prevent any fixed-width element from breaking layout */
+            table {
+                display: block;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+        }
+    </style>
+    <style>
         /* Admin Check Styles */
         .admin-check-container {
             padding: 60px 40px;
