@@ -2286,6 +2286,9 @@ https://templatemo.com/tm-583-festava-live
                        style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;">
                     <source src="video/bucuc1.webm" type="video/webm">
                 </video>
+                <button id="muteToggleBtn" class="audio-toggle-btn" title="Toggle sound">
+                    <i class="bi bi-volume-mute-fill" id="muteIcon"></i>
+                </button>
             </div>
 
         </section>
@@ -5759,24 +5762,32 @@ ${message}
 
         // Hero banner video
         (function () {
-            const video    = document.getElementById('heroBannerVideo');
-            const bgAudios = document.querySelectorAll('audio');
+            const video  = document.getElementById('heroBannerVideo');
+            const btn    = document.getElementById('muteToggleBtn');
+            const icon   = document.getElementById('muteIcon');
             if (!video) return;
 
-            // Try to play with sound. If the browser blocks sound, fall back to muted autoplay.
-            video.muted  = false;
+            // Browsers block autoplay with sound — always start muted
+            video.muted  = true;
             video.volume = 1;
+            video.play().catch(function () { /* autoplay fully blocked */ });
 
-            video.play().catch(function () {
-                // Sound was blocked — retry silently muted
-                video.muted = true;
-                video.play().catch(function () { /* autoplay fully blocked */ });
+            function updateIcon() {
+                if (video.muted) {
+                    icon.className = 'bi bi-volume-mute-fill';
+                    btn.title = 'Unmute';
+                } else {
+                    icon.className = 'bi bi-volume-up-fill';
+                    btn.title = 'Mute';
+                }
+            }
+
+            btn.addEventListener('click', function () {
+                video.muted = !video.muted;
+                updateIcon();
             });
 
-            // Mute background audio while video is playing
-            video.addEventListener('play', function () {
-                bgAudios.forEach(function (a) { a.muted = true; });
-            });
+            updateIcon();
         })();
 
         // QR Code Hash Navigation Handler
