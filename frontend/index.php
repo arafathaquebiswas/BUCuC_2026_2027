@@ -5781,23 +5781,51 @@ ${message}
 
         // Hero banner video
         document.addEventListener("DOMContentLoaded", function () {
-            const video     = document.getElementById("heroVideo");
-            const unmuteBtn = document.getElementById("unmuteBtn");
+            const video      = document.getElementById("heroVideo");
+            const unmuteBtn  = document.getElementById("unmuteBtn");
+            const heroSection = document.getElementById("section_1");
 
-            video.play().catch(function () {
-                console.log("Autoplay started muted.");
-            });
+            if (!video || !unmuteBtn || !heroSection) return;
 
+            // Tracks whether the user has explicitly enabled sound
+            let userSoundEnabled = false;
+
+            // Start muted — required for autoplay to work in all browsers
+            video.muted  = true;
+            video.volume = 1;
+            video.play().catch(function () { /* autoplay fully blocked */ });
+
+            // User clicks Enable Sound
             unmuteBtn.addEventListener("click", function () {
-                video.muted = false;
+                userSoundEnabled = true;
+                video.muted  = false;
                 video.volume = 1;
                 video.play();
 
                 unmuteBtn.innerHTML = "🔈 Sound Enabled";
-                setTimeout(() => {
+                setTimeout(function () {
                     unmuteBtn.style.display = "none";
                 }, 1500);
             });
+
+            // IntersectionObserver — watches hero section visibility
+            const observer = new IntersectionObserver(function (entries) {
+                entries.forEach(function (entry) {
+                    if (entry.isIntersecting) {
+                        // Hero is visible — restore sound only if user enabled it
+                        if (userSoundEnabled) {
+                            video.muted = false;
+                        }
+                    } else {
+                        // Hero left viewport — always mute
+                        video.muted = true;
+                    }
+                });
+            }, {
+                threshold: 0.2  // trigger when 20% of hero is visible/hidden
+            });
+
+            observer.observe(heroSection);
         });
 
         // QR Code Hash Navigation Handler
