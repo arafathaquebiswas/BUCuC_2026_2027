@@ -2282,11 +2282,9 @@ https://templatemo.com/tm-583-festava-live
                  style="position:absolute;top:0;left:0;width:100%;height:100%;z-index:0;overflow:hidden;">
                 <video id="heroBannerVideo"
                        playsinline
-                       poster="images/slide1.jpg"
+                       loop
                        style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;">
                     <source src="video/bucuc1.webm" type="video/webm">
-                    <img src="images/slide1.jpg" alt="BUCuC Banner"
-                         style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;">
                 </video>
             </div>
 
@@ -5776,12 +5774,8 @@ ${message}
             });
 
             // Mute background audio while video is playing
-            video.addEventListener('play',  function () {
+            video.addEventListener('play', function () {
                 bgAudios.forEach(function (a) { a.muted = true; });
-            });
-            // Restore background audio when video ends
-            video.addEventListener('ended', function () {
-                bgAudios.forEach(function (a) { a.muted = false; });
             });
         })();
 
