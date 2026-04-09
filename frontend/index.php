@@ -1384,6 +1384,25 @@ $signupEnabled = getSignupStatus();
             }
         }
 
+        .video-audio-btn {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            z-index: 20;
+            padding: 10px 18px;
+            background: rgba(0,0,0,0.7);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: 0.3s;
+        }
+
+        .video-audio-btn:hover {
+            background: rgba(0,0,0,0.9);
+        }
+
         img {
             max-width: 100%;
             height: auto;
@@ -2280,16 +2299,14 @@ https://templatemo.com/tm-583-festava-live
 
             <div class="video-wrap"
                  style="position:absolute;top:0;left:0;width:100%;height:100%;z-index:0;overflow:hidden;">
-                <video id="heroBannerVideo"
-                       playsinline
-                       loop
-                       muted
+                <video id="heroVideo" autoplay loop muted playsinline
                        style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;">
                     <source src="video/bucuc1.mp4" type="video/mp4">
                     <source src="video/bucuc1.webm" type="video/webm">
+                    Your browser does not support the video tag.
                 </video>
-                <button id="muteToggleBtn" class="audio-toggle-btn" title="Click to unmute">
-                    <i class="bi bi-volume-mute-fill" id="muteIcon"></i>
+                <button id="unmuteBtn" class="video-audio-btn">
+                    🔊 Enable Sound
                 </button>
             </div>
 
@@ -5763,31 +5780,25 @@ ${message}
         });
 
         // Hero banner video
-        (function () {
-            const video = document.getElementById('heroBannerVideo');
-            const btn   = document.getElementById('muteToggleBtn');
-            const icon  = document.getElementById('muteIcon');
-            if (!video) return;
+        document.addEventListener("DOMContentLoaded", function () {
+            const video     = document.getElementById("heroVideo");
+            const unmuteBtn = document.getElementById("unmuteBtn");
 
-            // Must start muted — all browsers block unmuted autoplay
-            video.muted  = true;
-            video.volume = 1;
-            video.play().catch(function () { /* autoplay fully blocked */ });
-
-            function updateIcon() {
-                icon.className = video.muted
-                    ? 'bi bi-volume-mute-fill'
-                    : 'bi bi-volume-up-fill';
-                btn.title = video.muted ? 'Click to unmute' : 'Click to mute';
-            }
-
-            btn.addEventListener('click', function () {
-                video.muted = !video.muted;
-                updateIcon();
+            video.play().catch(function () {
+                console.log("Autoplay started muted.");
             });
 
-            updateIcon();
-        })();
+            unmuteBtn.addEventListener("click", function () {
+                video.muted = false;
+                video.volume = 1;
+                video.play();
+
+                unmuteBtn.innerHTML = "🔈 Sound Enabled";
+                setTimeout(() => {
+                    unmuteBtn.style.display = "none";
+                }, 1500);
+            });
+        });
 
         // QR Code Hash Navigation Handler
         // This ensures that when someone scans a QR code with a hash (#section_5),
