@@ -2609,8 +2609,8 @@ https://templatemo.com/tm-583-festava-live
                     Members</a></li>
             <li><a href="#section_5"><i class="fa fa-calendar"></i>
                     Past Events</a></li>
-            <li><a href="#footer"><i class="fa fa-user-plus"></i> Sign
-                    Up</a></li>
+            <li><a href="#signup"><i class="fa fa-user-plus"></i> Sign Up</a></li>
+            <li class="sidebar-admin-item"><a href="admin-login.php"><i class="fa fa-user-shield"></i> Admin Login</a></li>
         </ul>
         <div class="sidebar-footer">
             <a href="#friend"><i class="fa fa-share-alt"></i> Tell a

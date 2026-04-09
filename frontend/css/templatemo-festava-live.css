@@ -1184,6 +1184,34 @@ strong {
     color: #7c3aed;
   }
 
+  /* Admin Login item — stands out from regular nav links */
+  .sidebar-admin-item {
+    border-bottom: none !important;
+    padding: 8px 8px 12px;
+  }
+
+  .sidebar-admin-item a {
+    background: linear-gradient(135deg, #e76f2c, #f3a94e);
+    color: #fff !important;
+    border-radius: 12px !important;
+    margin-right: 12px;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    box-shadow: 0 4px 14px rgba(231, 111, 44, 0.35);
+  }
+
+  .sidebar-admin-item a i {
+    color: #fff !important;
+  }
+
+  .sidebar-admin-item a:hover,
+  .sidebar-admin-item a:focus {
+    background: linear-gradient(135deg, #c85a1a, #e76f2c) !important;
+    color: #fff !important;
+    transform: translateX(3px);
+    box-shadow: 0 6px 18px rgba(231, 111, 44, 0.5);
+  }
+
   .sidebar-footer {
     margin-top: auto;
     padding: 18px 28px 24px 28px;
