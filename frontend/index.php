@@ -669,14 +669,17 @@ $signupEnabled = getSignupStatus();
             display: flex;
             flex-direction: column;
             height: 100%;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, z-index 0s;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
+            position: relative;
+            z-index: 1;
         }
 
         .panel-member-card:hover {
             transform: translateY(-7px);
             box-shadow: 0 16px 48px rgba(243, 211, 92, 0.22),
                         0 6px 20px rgba(0, 0, 0, 0.45);
+            z-index: 3;
         }
 
         /* Image area — fixed 4:5 portrait aspect ratio */
@@ -768,6 +771,12 @@ $signupEnabled = getSignupStatus();
         /* Column wrapper — makes all cards in a row stretch to equal height */
         .panel-members-grid .pmc-col {
             display: flex;
+            position: relative;
+            z-index: 1;
+        }
+
+        .panel-members-grid .pmc-col:hover {
+            z-index: 3;
         }
 
         /* Loading spinner */
@@ -1049,24 +1058,27 @@ $signupEnabled = getSignupStatus();
 
         .sb-swiper .swiper-slide {
             position: relative;
-            width: 300px;
-            height: 300px;
-            border-radius: 10px;
+            width: 260px;
+            height: 340px;
+            border-radius: 12px;
             display: flex;
             justify-content: center;
             align-items: center;
-            background: #fff;
-            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.1);
+            background: #111;
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.3);
             transition: 0.3s;
             min-width: 120px;
-            min-height: 120px;
+            min-height: 160px;
+            overflow: visible;
         }
 
         .sb-swiper .swiper-slide img {
             width: 100%;
             height: 100%;
-            object-fit: cover;
+            object-fit: contain;
+            object-position: center top;
             border-radius: 10px;
+            background: #111;
         }
 
         .overlay {
@@ -1081,7 +1093,7 @@ $signupEnabled = getSignupStatus();
             background: rgba(0, 0, 0, 0.5);
             opacity: 0;
             transition: opacity 0.3s;
-            border-radius: 10px;
+            border-radius: 12px;
         }
 
         .sb-swiper .swiper-slide:hover .overlay {
@@ -1100,38 +1112,40 @@ $signupEnabled = getSignupStatus();
 
         .member-name {
             position: absolute;
-            bottom: -60px;
+            bottom: 0;
             left: 0;
             right: 0;
             text-align: center;
             color: white;
-            font-size: 1.1rem;
+            font-size: 1rem;
             font-weight: 500;
-            padding: 5px;
-            background: rgba(0, 0, 0, 0.7);
-            border-radius: 0 0 10px 10px;
-            transition: all 0.3s ease;
+            padding: 8px 6px;
+            background: linear-gradient(to top, rgba(0,0,0,0.85) 80%, transparent);
+            border-radius: 0 0 12px 12px;
+            transition: opacity 0.3s ease, transform 0.3s ease;
             opacity: 0;
-            transform: translateY(20px);
+            transform: translateY(8px);
         }
 
         .member-name .name {
             display: block;
-            font-size: 1rem;
-            margin-bottom: 1px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 2px;
+            line-height: 1.3;
         }
 
         .member-name .position {
             display: block;
-            font-size: 0.8rem;
+            font-size: 0.72rem;
             color: #ffd700;
             font-weight: 400;
+            line-height: 1.3;
         }
 
         .sb-swiper .swiper-slide-active .member-name {
             opacity: 1;
             transform: translateY(0);
-            bottom: 0;
         }
 
         .sb-section-title {
@@ -1798,8 +1812,24 @@ $signupEnabled = getSignupStatus();
         }
 
         @media (max-width: 767px) {
+            /* Fix hero height on mobile Safari (avoids 100vh address-bar bug) */
             .hero-section {
-                min-height: 100svh;
+                height: 100svh;
+                min-height: -webkit-fill-available;
+            }
+
+            /* Video fill — critical for Safari/iOS */
+            #heroVideo {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                min-width: 100%;
+                min-height: 100%;
+                width: auto;
+                height: auto;
+                object-fit: cover;
+                object-position: center center;
             }
 
             .hero-section h1 {
@@ -1878,8 +1908,11 @@ $signupEnabled = getSignupStatus();
                 max-width: 340px;
                 margin-left: auto;
                 margin-right: auto;
-                /* Disable hover lift on touch devices */
-                transform: none !important;
+            }
+
+            /* Reduce hover lift distance on touch — still feels responsive but won't overlap */
+            .panel-member-card:hover {
+                transform: translateY(-4px);
             }
 
             /* Reduce aspect ratio height on small screens */
@@ -1921,8 +1954,8 @@ $signupEnabled = getSignupStatus();
             }
 
             .sb-swiper .swiper-slide {
-                width: 260px;
-                height: 260px;
+                width: 230px;
+                height: 300px;
             }
         }
 
@@ -1938,32 +1971,20 @@ $signupEnabled = getSignupStatus();
             }
 
             .sb-swiper {
-                padding: 20px 0 80px;
+                padding: 20px 0 60px;
             }
 
             .sb-swiper .swiper-slide {
-                width: 220px;
-                height: 220px;
-                border-radius: 8px;
-            }
-
-            .member-name {
-                font-size: 0.9rem;
-            }
-
-            .member-name .name {
-                font-size: 0.85rem;
-            }
-
-            .member-name .position {
-                font-size: 0.7rem;
+                width: 200px;
+                height: 260px;
+                border-radius: 10px;
             }
         }
 
         @media (max-width: 400px) {
             .sb-swiper .swiper-slide {
-                width: 180px;
-                height: 180px;
+                width: 170px;
+                height: 220px;
             }
         }
 
