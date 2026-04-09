@@ -1006,8 +1006,8 @@ $signupEnabled = getSignupStatus();
             padding: 80px 0;
             background: url(https://github.com/ecemgo/mini-samples-great-tricks/assets/13468728/8727c9b1-be21-4932-a221-4257b59a74dd);
             background-repeat: no-repeat;
-            backdrop-filter: blur(30%);
-            -webkit-backdrop-filter: blur(30%);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
             animation: slidein 120s forwards infinite alternate;
         }
 
@@ -1069,13 +1069,13 @@ $signupEnabled = getSignupStatus();
             transition: 0.3s;
             min-width: 120px;
             min-height: 160px;
-            overflow: visible;
+            overflow: hidden;
         }
 
         .sb-swiper .swiper-slide img {
             width: 100%;
             height: 100%;
-            object-fit: contain;
+            object-fit: cover;
             object-position: center top;
             border-radius: 10px;
             background: #111;
@@ -1145,6 +1145,12 @@ $signupEnabled = getSignupStatus();
 
         .sb-swiper .swiper-slide-active .member-name {
             opacity: 1;
+            transform: translateY(0);
+        }
+
+        .sb-swiper .swiper-slide-prev .member-name,
+        .sb-swiper .swiper-slide-next .member-name {
+            opacity: 0.6;
             transform: translateY(0);
         }
 
@@ -3942,7 +3948,8 @@ https://templatemo.com/tm-583-festava-live
                             <div class="swiper-wrapper" id="sbSwiperWrapper">
                                 <div class="swiper-slide">
                                     <img src="images/Panel_24_25/Secreteries/rudian.jpg"
-                                        onerror="this.src='images/placeholder.png'" />
+                                        alt="Rudian Ahmed - Secretary of Human Resource"
+                                        onerror="console.warn('Missing image:', this.src); this.src='images/placeholder.png'; this.onerror=null;" />
                                     <div class="overlay">
                                         <a href="https://www.facebook.com/rudian.borneel" target="_blank">
                                             <ion-icon name="logo-facebook" style="color: #1877f2"></ion-icon>
@@ -3956,7 +3963,8 @@ https://templatemo.com/tm-583-festava-live
                                 </div>
                                 <div class="swiper-slide">
                                     <img src="images/Panel_24_25/Secreteries/MD_Sadman_Safin_Oasif.jpg"
-                                        onerror="this.src='images/placeholder.png'" />
+                                        alt="MD Sadman Safin Oasif - Secretary of Human Resource"
+                                        onerror="console.warn('Missing image:', this.src); this.src='images/placeholder.png'; this.onerror=null;" />
                                     <div class="overlay">
                                         <a href="https://www.facebook.com/profile.php?id=100008597416622"
                                             target="_blank">
@@ -3973,7 +3981,8 @@ https://templatemo.com/tm-583-festava-live
 
                                 <div class="swiper-slide">
                                     <img src="images/Panel_24_25/Secreteries/Showmik_Safi.jpg"
-                                        onerror="this.src='images/placeholder.png'" />
+                                        alt="Showmik Safi - Secretary of Event Management & Logistics"
+                                        onerror="console.warn('Missing image:', this.src); this.src='images/placeholder.png'; this.onerror=null;" />
                                     <div class="overlay">
                                         <a href="https://www.facebook.com/profile.php?id=100067106982577"
                                             target="_blank">
@@ -3989,7 +3998,8 @@ https://templatemo.com/tm-583-festava-live
 
                                 <div class="swiper-slide">
                                     <img src="images/Panel_24_25/Secreteries/Tamejul_habib.jpg"
-                                        onerror="this.src='images/placeholder.png'" />
+                                        alt="Tamejul Habib - Secretary of Admin"
+                                        onerror="console.warn('Missing image:', this.src); this.src='images/placeholder.png'; this.onerror=null;" />
                                     <div class="overlay">
                                         <a href="https://www.facebook.com/INCcharlie19" target="_blank">
                                             <ion-icon name="logo-facebook" style="color: #1877f2"></ion-icon>
@@ -4003,7 +4013,8 @@ https://templatemo.com/tm-583-festava-live
                                 </div>
                                 <div class="swiper-slide">
                                     <img src="images/Panel_24_25/Secreteries/Nafisa_Islam.jpg"
-                                        onerror="this.src='images/placeholder.png'" />
+                                        alt="Nafisa Islam - Secretary of Creative"
+                                        onerror="console.warn('Missing image:', this.src); this.src='images/placeholder.png'; this.onerror=null;" />
                                     <div class="overlay">
                                         <a href="https://www.facebook.com/nafisaislamahona" target="_blank">
                                             <ion-icon name="logo-facebook" style="color: #1877f2"></ion-icon>
@@ -4017,7 +4028,8 @@ https://templatemo.com/tm-583-festava-live
                                 </div>
                                 <div class="swiper-slide">
                                     <img src="images/Panel_24_25/Secreteries/Shreya_Sangbriti.jpg"
-                                        onerror="this.src='images/placeholder.png'" />
+                                        alt="Shreya Sangbriti - Secretary of Creative"
+                                        onerror="console.warn('Missing image:', this.src); this.src='images/placeholder.png'; this.onerror=null;" />
                                     <div class="overlay">
                                         <a href="https://web.facebook.com/shreyasangbriti#" target="_blank">
                                             <ion-icon name="logo-facebook" style="color: #1877f2"></ion-icon>
@@ -4032,7 +4044,8 @@ https://templatemo.com/tm-583-festava-live
                                 </div>
                                 <div class="swiper-slide">
                                     <img src="images/Panel_24_25/Secreteries/Avibadhan_Das.jpg"
-                                        onerror="this.src='images/placeholder.png'" />
+                                        alt="Avibadhan Das - Secretary of Performance (Music)"
+                                        onerror="console.warn('Missing image:', this.src); this.src='images/placeholder.png'; this.onerror=null;" />
                                     <div class="overlay">
                                         <a href="https://www.facebook.com/avibadhan.dasarno" target="_blank">
                                             <ion-icon name="logo-facebook" style="color: #1877f2"></ion-icon>
@@ -4046,7 +4059,8 @@ https://templatemo.com/tm-583-festava-live
                                 </div>
                                 <div class="swiper-slide">
                                     <img src="images/Panel_24_25/Secreteries/Lalon.jpg"
-                                        onerror="this.src='images/placeholder.png'" />
+                                        alt="Lalon Mostafa - Secretary of Performance (Music)"
+                                        onerror="console.warn('Missing image:', this.src); this.src='images/placeholder.png'; this.onerror=null;" />
                                     <div class="overlay">
                                         <a href="https://www.facebook.com/andalib.mostafa.1" target="_blank">
                                             <ion-icon name="logo-facebook" style="color: #1877f2"></ion-icon>
@@ -4060,7 +4074,8 @@ https://templatemo.com/tm-583-festava-live
                                 </div>
                                 <div class="swiper-slide">
                                     <img src="images/Panel_24_25/Secreteries/Rudra_Mathew_Gomes.jpg"
-                                        onerror="this.src='images/placeholder.png'" />
+                                        alt="Rudra Mathew Gomes - Secretary of Performance (Music)"
+                                        onerror="console.warn('Missing image:', this.src); this.src='images/placeholder.png'; this.onerror=null;" />
                                     <div class="overlay">
                                         <a href="https://www.facebook.com/henry.ribeiro.33" target="_blank">
                                             <ion-icon name="logo-facebook" style="color: #1877f2"></ion-icon>
@@ -4075,7 +4090,8 @@ https://templatemo.com/tm-583-festava-live
                                 </div>
                                 <div class="swiper-slide">
                                     <img src="images/Panel_24_25/Secreteries/Syed_Ariful_Islam_Aowan.jpg"
-                                        onerror="this.src='images/placeholder.png'" />
+                                        alt="Syed Ariful Islam Aowan - Secretary of Performance (Music)"
+                                        onerror="console.warn('Missing image:', this.src); this.src='images/placeholder.png'; this.onerror=null;" />
                                     <div class="overlay">
                                         <a href="https://www.facebook.com/syedariful.aowan" target="_blank">
                                             <ion-icon name="logo-facebook" style="color: #1877f2"></ion-icon>
@@ -4090,7 +4106,8 @@ https://templatemo.com/tm-583-festava-live
                                 </div>
                                 <div class="swiper-slide">
                                     <img src="images/Panel_24_25/Secreteries/Rubaba_Khijir_Nusheen.jpg"
-                                        onerror="this.src='images/placeholder.png'" />
+                                        alt="Rubaba Khijir Nusheen - Secretary of Performance (Dance)"
+                                        onerror="console.warn('Missing image:', this.src); this.src='images/placeholder.png'; this.onerror=null;" />
                                     <div class="overlay">
                                         <a href="https://www.facebook.com/rubaba.nusheen" target="_blank">
                                             <ion-icon name="logo-facebook" style="color: #1877f2"></ion-icon>
@@ -4105,7 +4122,8 @@ https://templatemo.com/tm-583-festava-live
                                 </div>
                                 <div class="swiper-slide">
                                     <img src="images/Panel_24_25/Secreteries/Maria_Kamal_Katha.jpg"
-                                        onerror="this.src='images/placeholder.png'" />
+                                        alt="Maria Kamal Katha - Secretary of Performance (Dance)"
+                                        onerror="console.warn('Missing image:', this.src); this.src='images/placeholder.png'; this.onerror=null;" />
                                     <div class="overlay">
                                         <a href="https://www.facebook.com/maria.kamal.katha" target="_blank">
                                             <ion-icon name="logo-facebook" style="color: #1877f2"></ion-icon>
@@ -4120,7 +4138,8 @@ https://templatemo.com/tm-583-festava-live
                                 </div>
                                 <div class="swiper-slide">
                                     <img src="images/Panel_24_25/Secreteries/Dino.jpg"
-                                        onerror="this.src='images/placeholder.png'" />
+                                        alt="Diana Halder Momo - Secretary of Performance (Dance)"
+                                        onerror="console.warn('Missing image:', this.src); this.src='images/placeholder.png'; this.onerror=null;" />
                                     <div class="overlay">
                                         <a href="https://www.facebook.com/diana.momo.334" target="_blank">
                                             <ion-icon name="logo-facebook" style="color: #1877f2"></ion-icon>
@@ -4135,7 +4154,8 @@ https://templatemo.com/tm-583-festava-live
                                 </div>
                                 <div class="swiper-slide">
                                     <img src="images/Panel_24_25/Secreteries/Jubair_Rahman.jpg"
-                                        onerror="this.src='images/placeholder.png'" />
+                                        alt="Jubair Rahman - Secretary of Performance (Dance)"
+                                        onerror="console.warn('Missing image:', this.src); this.src='images/placeholder.png'; this.onerror=null;" />
                                     <div class="overlay">
                                         <a href="https://www.facebook.com/jubair.rahman.765511" target="_blank">
                                             <ion-icon name="logo-facebook" style="color: #1877f2"></ion-icon>
@@ -4149,7 +4169,8 @@ https://templatemo.com/tm-583-festava-live
                                 </div>
                                 <div class="swiper-slide">
                                     <img src="images/Panel_24_25/Secreteries/Fabiha_Bushra_Ali.jpg"
-                                        onerror="this.src='images/placeholder.png'" />
+                                        alt="Fabiha Bushra Ali - Secretary of Public Relation"
+                                        onerror="console.warn('Missing image:', this.src); this.src='images/placeholder.png'; this.onerror=null;" />
                                     <div class="overlay">
                                         <a href="https://www.facebook.com/fabooshu" target="_blank">
                                             <ion-icon name="logo-facebook" style="color: #1877f2"></ion-icon>
@@ -4164,7 +4185,8 @@ https://templatemo.com/tm-583-festava-live
                                 </div>
                                 <div class="swiper-slide">
                                     <img src="images/Panel_24_25/Secreteries/Md_Ahnaf_Farhan.jpg"
-                                        onerror="this.src='images/placeholder.png'" />
+                                        alt="Md Ahnaf Farhan - Secretary of Public Relation"
+                                        onerror="console.warn('Missing image:', this.src); this.src='images/placeholder.png'; this.onerror=null;" />
                                     <div class="overlay">
                                         <a href="https://www.facebook.com/ahnaf.farhan.1" target="_blank">
                                             <ion-icon name="logo-facebook" style="color: #1877f2"></ion-icon>
@@ -4179,7 +4201,8 @@ https://templatemo.com/tm-583-festava-live
                                 </div>
                                 <div class="swiper-slide">
                                     <img src="images/Panel_24_25/Secreteries/Khaled_Bin_Taher.jpg"
-                                        onerror="this.src='images/placeholder.png'" />
+                                        alt="Khaled Bin Taher - Secretary of Public Relation"
+                                        onerror="console.warn('Missing image:', this.src); this.src='images/placeholder.png'; this.onerror=null;" />
                                     <div class="overlay">
                                         <a href="https://www.facebook.com/Khaled.tahsin18" target="_blank">
                                             <ion-icon name="logo-facebook" style="color: #1877f2"></ion-icon>
@@ -4194,7 +4217,8 @@ https://templatemo.com/tm-583-festava-live
                                 </div>
                                 <div class="swiper-slide">
                                     <img src="images/Panel_24_25/Secreteries/Kazi_Tawsiat_Binte_Ehsan.jpg"
-                                        onerror="this.src='images/placeholder.png'" />
+                                        alt="Kazi Tawsiat Binte Ehsan - Secretary of Admin"
+                                        onerror="console.warn('Missing image:', this.src); this.src='images/placeholder.png'; this.onerror=null;" />
                                     <div class="overlay">
                                         <a href="https://www.facebook.com/kazitawsiat.binteehsan" target="_blank">
                                             <ion-icon name="logo-facebook" style="color: #1877f2"></ion-icon>
@@ -4208,7 +4232,8 @@ https://templatemo.com/tm-583-festava-live
                                 </div>
                                 <div class="swiper-slide">
                                     <img src="images/Panel_24_25/Secreteries/Jareen_Tasnim_Bushra.jpg"
-                                        onerror="this.src='images/placeholder.png'" />
+                                        alt="Jareen Tasnim Bushra - Secretary of Research & Development"
+                                        onerror="console.warn('Missing image:', this.src); this.src='images/placeholder.png'; this.onerror=null;" />
                                     <div class="overlay">
                                         <a href="https://www.facebook.com/buushraaaaaa21" target="_blank">
                                             <ion-icon name="logo-facebook" style="color: #1877f2"></ion-icon>
@@ -4223,7 +4248,8 @@ https://templatemo.com/tm-583-festava-live
                                 </div>
                                 <div class="swiper-slide">
                                     <img src="images/Panel_24_25/Secreteries/Tasnimul_Hasan.jpg"
-                                        onerror="this.src='images/placeholder.png'" />
+                                        alt="Tasnimul Hasan - Secretary of Research & Development"
+                                        onerror="console.warn('Missing image:', this.src); this.src='images/placeholder.png'; this.onerror=null;" />
                                     <div class="overlay">
                                         <a href="https://www.facebook.com/buushraaaaaa21" target="_blank">
                                             <ion-icon name="logo-facebook" style="color: #1877f2"></ion-icon>
@@ -4704,13 +4730,17 @@ https://templatemo.com/tm-583-festava-live
                     stretch: 0,
                     depth: 120,
                     modifier: 1,
-                    slideShadows: true,
+                    slideShadows: false,
                 },
                 pagination: {
                     el: '.swiper-pagination',
                     clickable: true,
                 },
-                autoplay: false,
+                autoplay: {
+                    delay: 3000,
+                    disableOnInteraction: false,
+                    pauseOnMouseEnter: true,
+                },
                 // Responsive breakpoints:
                 breakpoints: {
                     320: {
@@ -4740,26 +4770,19 @@ https://templatemo.com/tm-583-festava-live
                 }
             });
 
-            // Setup intersection observer for autoplay
-            let autoplayStarted = false;
+            // Pause/resume autoplay based on visibility
             const sbSection = document.getElementById('section_4');
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
-                    if (entry.isIntersecting && !autoplayStarted && window.sbSwiper) {
-                        try {
-                            window.sbSwiper.slideToLoop(0, 0); // Go to first slide instantly
-                            if (window.sbSwiper.autoplay) {
-                                window.sbSwiper.autoplay.start();
-                            }
-                            autoplayStarted = true;
-                            console.log('SB Swiper autoplay started');
-                        } catch (error) {
-                            console.error('Error starting autoplay:', error);
-                        }
+                    if (!window.sbSwiper || !window.sbSwiper.autoplay) return;
+                    if (entry.isIntersecting) {
+                        window.sbSwiper.autoplay.start();
+                    } else {
+                        window.sbSwiper.autoplay.stop();
                     }
                 });
             }, {
-                threshold: 0.7
+                threshold: 0.3
             });
 
             if (sbSection) {
