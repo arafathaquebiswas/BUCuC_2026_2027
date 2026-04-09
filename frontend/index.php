@@ -1803,33 +1803,78 @@ $signupEnabled = getSignupStatus();
         }
 
         /* ============================================================
-           HERO SECTION
+           HERO SECTION — video wrap + video (no inline styles on element)
         ============================================================ */
-        @media (max-width: 1024px) {
+
+        /* Desktop base — full viewport fill */
+        .video-wrap {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        #heroVideo {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center center;
+            display: block;
+        }
+
+        /* ── Tablet (768px – 1024px) ──────────────────────────── */
+        @media (max-width: 1024px) and (min-width: 768px) {
+            .hero-section {
+                height: 75vh;
+                min-height: 480px;
+            }
+
+            #heroVideo {
+                object-position: center 20%;
+            }
+
             .hero-section .col-lg-12[style*="gap: 15rem"] {
                 gap: 3rem !important;
             }
+
+            .video-audio-btn {
+                bottom: 16px;
+                right: 16px;
+                padding: 9px 14px;
+                font-size: 13px;
+            }
         }
 
+        /* ── Mobile (≤ 767px) ─────────────────────────────────── */
         @media (max-width: 767px) {
-            /* Fix hero height on mobile Safari (avoids 100vh address-bar bug) */
+            /* Fix height — avoids iOS Safari 100vh address-bar bug */
             .hero-section {
                 height: 100svh;
-                min-height: -webkit-fill-available;
+                height: 100vh; /* fallback for older browsers */
+                min-height: 500px;
             }
 
-            /* Video fill — critical for Safari/iOS */
+            /* Use -webkit-fill-available so Safari fills correctly */
+            @supports (-webkit-touch-callout: none) {
+                .hero-section {
+                    height: -webkit-fill-available;
+                }
+            }
+
+            /* Video: cinematic portrait fill on phones */
             #heroVideo {
-                position: absolute;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
-                min-width: 100%;
-                min-height: 100%;
-                width: auto;
-                height: auto;
                 object-fit: cover;
-                object-position: center center;
+                object-position: center 20%;
+                /* Force GPU layer — smoother playback on mobile */
+                will-change: transform;
+                -webkit-transform: translateZ(0);
+                transform: translateZ(0);
             }
 
             .hero-section h1 {
@@ -1838,7 +1883,7 @@ $signupEnabled = getSignupStatus();
                 margin-top: 0.3em;
             }
 
-            /* Stack location + social links vertically, remove huge gap */
+            /* Stack location + social links vertically */
             .hero-section .col-lg-12[style*="gap"] {
                 flex-direction: column !important;
                 gap: 1rem !important;
@@ -1851,7 +1896,7 @@ $signupEnabled = getSignupStatus();
                 text-align: center;
             }
 
-            /* Social icons — tighter on mobile */
+            /* Social icons */
             .social-icon {
                 gap: 8px;
                 flex-wrap: wrap;
@@ -1864,13 +1909,29 @@ $signupEnabled = getSignupStatus();
                 font-size: 1rem;
             }
 
-            /* Sound button — smaller on mobile */
+            /* Sound button — move up from bottom edge, easy tap target */
             .video-audio-btn {
-                bottom: 12px;
+                bottom: 24px;
+                right: 16px;
+                padding: 10px 14px;
+                font-size: 13px;
+                border-radius: 8px;
+                min-height: 44px; /* iOS minimum tap target */
+                min-width: 44px;
+            }
+        }
+
+        /* ── Very small phones (≤ 390px) ─────────────────────── */
+        @media (max-width: 390px) {
+            .hero-section {
+                min-height: 480px;
+            }
+
+            .video-audio-btn {
+                bottom: 16px;
                 right: 12px;
                 padding: 8px 12px;
                 font-size: 12px;
-                border-radius: 6px;
             }
         }
 
@@ -2686,10 +2747,8 @@ https://templatemo.com/tm-583-festava-live
                 </div>
             </div>
 
-            <div class="video-wrap"
-                 style="position:absolute;top:0;left:0;width:100%;height:100%;z-index:0;overflow:hidden;">
-                <video id="heroVideo" autoplay loop muted playsinline
-                       style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;">
+            <div class="video-wrap">
+                <video id="heroVideo" autoplay loop muted playsinline>
                     <source src="video/bucuc1.mp4" type="video/mp4">
                     <source src="video/bucuc1.webm" type="video/webm">
                     Your browser does not support the video tag.
