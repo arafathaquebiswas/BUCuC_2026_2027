@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(ffprobe -v quiet -print_format json -show_streams \"c:/xampp/htdocs/dashboard/BUCuC_2026_2027/frontend/video/bucuc1.webm\")",
+      "Bash(ffprobe \"c:/xampp/htdocs/dashboard/BUCuC_2026_2027/frontend/video/bucuc1.webm\")"
+    ]
+  }
+}
