@@ -68,9 +68,9 @@ try {
 
         // 2. Insert into shortlisted_members
         $insertStmt = $pdo->prepare("
-            INSERT INTO shortlisted_members 
-            (full_name, university_id, email, gsuite_email, department, phone, semester, gender, facebook_url, firstPriority, secondPriority, created_at, updated_at)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)
+            INSERT INTO shortlisted_members
+            (full_name, university_id, email, gsuite_email, department, phone, semester, gender, date_of_birth, facebook_url, firstPriority, secondPriority, created_at, updated_at)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)
         ");
 
         $insertResult = $insertStmt->execute([
@@ -82,6 +82,7 @@ try {
             $member['phone'],
             $member['semester'],
             $member['gender'],
+            $member['date_of_birth'] ?? null,
             $member['facebook_url'],
             $member['firstPriority'],
             $member['secondPriority'],
@@ -121,9 +122,9 @@ try {
         if ($emailResult['success']) {
             // Insert member into members table (final approved members)
             $insertStmt = $pdo->prepare("
-                INSERT INTO members 
-                (full_name, university_id, email, gsuite_email, department, phone, semester, gender, facebook_url, firstPriority, secondPriority, created_at, updated_at)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)
+                INSERT INTO members
+                (full_name, university_id, email, gsuite_email, department, phone, semester, gender, date_of_birth, facebook_url, firstPriority, secondPriority, created_at, updated_at)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)
             ");
 
             $insertResult = $insertStmt->execute([
@@ -135,6 +136,7 @@ try {
                 $member['phone'],
                 $member['semester'],
                 $member['gender'],
+                $member['date_of_birth'] ?? null,
                 $member['facebook_url'],
                 $member['firstPriority'],
                 $member['secondPriority'],
