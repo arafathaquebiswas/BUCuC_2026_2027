@@ -109,7 +109,8 @@ try {
             $deleteStmt = $pdo->prepare("DELETE FROM pending_applications WHERE id = ?");
             $deleteStmt->execute([$memberId]);
 
-            header("Location: " . $redirect_to . "?success=" . urlencode('Member shortlisted successfully. Super Admin can now review.'));
+            $deletedRows = $deleteStmt->rowCount();
+            header("Location: " . $redirect_to . "?success=" . urlencode('Member shortlisted successfully. Deleted rows: ' . $deletedRows . ' | member_id: ' . $memberId));
         } else {
             header("Location: " . $redirect_to . "?error=" . urlencode('Failed to shortlist member'));
         }
