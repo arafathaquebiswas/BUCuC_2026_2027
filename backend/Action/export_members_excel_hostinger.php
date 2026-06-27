@@ -52,12 +52,12 @@ try {
     $database = new Database();
     $pdo = $database->createConnection();
 
-    // Get all members data
-    $stmt = $pdo->query("SELECT * FROM members ORDER BY created_at DESC");
+    // Get all pending applications data
+    $stmt = $pdo->query("SELECT * FROM pending_applications ORDER BY created_at DESC");
     $members = $stmt->fetchAll();
 
     if (empty($members)) {
-        throw new Exception("No members found in the database.");
+        throw new Exception("No pending applications found in the database.");
     }
 
     // Create new Spreadsheet object
@@ -68,9 +68,9 @@ try {
     $spreadsheet->getProperties()
         ->setCreator('BRAC University Cultural Club')
         ->setLastModifiedBy('Admin')
-        ->setTitle('Member Applications Export')
-        ->setSubject('Member Applications Data')
-        ->setDescription('Export of all member applications from the database')
+        ->setTitle('Pending Applications Export')
+        ->setSubject('Pending Applications Data')
+        ->setDescription('Export of all pending applications from the database')
         ->setKeywords('members, applications, brac, cultural club')
         ->setCategory('Member Data');
 
@@ -84,10 +84,10 @@ try {
         'F1' => 'Phone',
         'G1' => 'Semester',
         'H1' => 'Gender',
-        'I1' => 'Facebook URL',
-        'J1' => 'First Priority',
-        'K1' => 'Second Priority',
-        'L1' => 'Membership Status',
+        'I1' => 'Date of Birth',
+        'J1' => 'Facebook URL',
+        'K1' => 'First Priority',
+        'L1' => 'Second Priority',
         'M1' => 'Application Date',
         'N1' => 'Last Updated'
     ];
@@ -135,14 +135,10 @@ try {
         $sheet->setCellValue('F' . $row, $member['phone']);
         $sheet->setCellValue('G' . $row, $member['semester']);
         $sheet->setCellValue('H' . $row, $member['gender']);
-        $sheet->setCellValue('I' . $row, $member['facebook_url']);
-        $sheet->setCellValue('J' . $row, $member['firstPriority']);
-        $sheet->setCellValue('K' . $row, $member['secondPriority']);
-
-        // Format membership status
-        $status = $member['membership_status'];
-        $statusText = ($status == 'New_member') ? 'Pending' : 'Accepted';
-        $sheet->setCellValue('L' . $row, $statusText);
+        $sheet->setCellValue('I' . $row, $member['date_of_birth'] ?? '');
+        $sheet->setCellValue('J' . $row, $member['facebook_url']);
+        $sheet->setCellValue('K' . $row, $member['firstPriority']);
+        $sheet->setCellValue('L' . $row, $member['secondPriority']);
 
         // Format dates
         $createdDate = date('Y-m-d H:i:s', strtotime($member['created_at']));
@@ -174,7 +170,6 @@ try {
     // Auto-size columns (with limits for Hostinger)
     foreach (range('A', 'N') as $column) {
         $sheet->getColumnDimension($column)->setAutoSize(true);
-        // Set maximum width to prevent memory issues
         $sheet->getColumnDimension($column)->setWidth(min(50, $sheet->getColumnDimension($column)->getWidth()));
     }
 
@@ -183,21 +178,12 @@ try {
     $sheet->setCellValue('A' . $summaryRow, 'Export Summary:');
     $sheet->getStyle('A' . $summaryRow)->getFont()->setBold(true);
 
-    $sheet->setCellValue('A' . ($summaryRow + 1), 'Total Applications: ' . count($members));
+    $sheet->setCellValue('A' . ($summaryRow + 1), 'Total Pending Applications: ' . count($members));
     $sheet->setCellValue('A' . ($summaryRow + 2), 'Export Date: ' . date('Y-m-d H:i:s'));
     $sheet->setCellValue('A' . ($summaryRow + 3), 'Exported By: ' . ($_SESSION['admin_name'] ?? 'Admin'));
 
-    // Count pending vs accepted
-    $pendingCount = count(array_filter($members, function ($member) {
-        return $member['membership_status'] == 'New_member';
-    }));
-    $acceptedCount = count($members) - $pendingCount;
-
-    $sheet->setCellValue('A' . ($summaryRow + 4), 'Pending Applications: ' . $pendingCount);
-    $sheet->setCellValue('A' . ($summaryRow + 5), 'Accepted Applications: ' . $acceptedCount);
-
     // Set filename with timestamp
-    $filename = 'Member_Applications_' . date('Y-m-d_H-i-s') . '.xlsx';
+    $filename = 'Pending_Applications_' . date('Y-m-d_H-i-s') . '.xlsx';
 
     // Clear any previous output
     if (ob_get_level()) {
