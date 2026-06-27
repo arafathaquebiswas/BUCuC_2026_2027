@@ -27,8 +27,8 @@ try {
     } elseif ($statusFilter === 'Pending' || $statusFilter === 'New_member') {
         $query = "SELECT * FROM pending_applications";
     } else {
-        // Default: export accepted members from members table
-        $query = "SELECT * FROM members";
+        // Default: export pending applications
+        $query = "SELECT * FROM pending_applications";
     }
 
     $query .= " ORDER BY created_at DESC";
