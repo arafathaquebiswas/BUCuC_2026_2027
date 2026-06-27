@@ -45,7 +45,7 @@ $action = $_POST['action'] ?? '';
 $memberId = $_POST['member_id'] ?? 0;
 $redirect_to = $_POST['redirect_to'] ?? 'pending_applications.php';
 
-if (empty($action) || empty($memberId)) {
+if (empty($action) || !isset($_POST['member_id']) || $_POST['member_id'] === '') {
     header("Location: " . $redirect_to . "?error=" . urlencode('Missing required parameters'));
     exit();
 }
